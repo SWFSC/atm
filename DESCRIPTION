@@ -1,0 +1,24 @@
+Package: atm
+Type: Package
+Title: Functions Used for the Analysis of Acoustic-Trawl Method (ATM) Survey Data
+Version: 0.1.0
+Authors@R: person("Stierhoff", "Kevin", email =
+ "Kevin.Stierhoff@noaa.gov", role = c("aut", "cre"))
+Maintainer: Kevin L. Stierhoff <kevin.stierhoff@noaa.gov>
+Description: A collection of functions used to analyze data from acoustic-trawl method surveys.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+Suggests: 
+    testthat
+Imports: 
+    ggplot2,
+    magrittr,
+    sf,
+    dplyr,
+    stringr,
+    purrr,
+    xml2,
+    readr
