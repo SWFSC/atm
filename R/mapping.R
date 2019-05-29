@@ -3,7 +3,7 @@
 #' @param nav Data frame containing navigation data, used to set map boundaries.
 #' @param states Simple feature with state boundaries.
 #' @param countries Simple feature with country boundaries.
-#' @param landmarks A data frame with names and locations of landmarks.
+#' @param labels A data frame with names and locations of landmark labels.
 #' @param bathy Simple feature with bathymetr contours.
 #' @param crs Coordinate reference system (CRS) for map projection.
 #' @return A ggplot2 map object.
@@ -12,7 +12,7 @@
 #' @examples
 #' get_basemap(nav, states, countries, landmarks, bathy, crs = 3310)
 #' @export
-get_basemap <- function(nav, states, countries, places, bathy, crs) {
+get_basemap <- function(nav, states, countries, labels, bathy, crs) {
   # Set padding around data
   map.bounds <- nav %>%
     sf::st_transform(crs = crs) %>%
@@ -26,14 +26,14 @@ get_basemap <- function(nav, states, countries, places, bathy, crs) {
     ggplot2::geom_sf(data = countries, fill = "gray90", colour = "gray50") +
     ggplot2::geom_sf(data = states, fill = "gray90", colour = "gray50") +
     # Plot landmarks
-    ggplot2::geom_point(data = landmarks, aes(X, Y), size = 2, colour = 'gray50') +
-    ggplot2::geom_text(data  = places, aes(X, Y, label = name),
+    ggplot2::geom_point(data = labels, aes(X, Y), size = 2, colour = 'gray50') +
+    ggplot2::geom_text(data  = labels, aes(X, Y, label = name),
                                 colour = 'black', size = 2, fontface = 'bold',
                                 hjust = 0, nudge_x = 0.2, nudge_y = 0.05, angle = 25) +
-    # shadowtext::geom_shadowtext(data  = places, aes(X, Y, label = name),
+    # shadowtext::geom_shadowtext(data  = labels, aes(X, Y, label = name),
     #                             colour = 'gray20', size = 2, fontface = 'bold',
     #                             hjust = 0, nudge_x = 0.2, nudge_y = 0.05, angle = 25,
-    #                             bg.colour = ggplot2::"white") +
+    #                             bg.colour = "white") +
     # Format axes and titles
     xlab("Longitude") + ylab("Latitude") +
     ggplot2::coord_sf(crs = crs,

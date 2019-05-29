@@ -4,7 +4,7 @@
 \alias{get_basemap}
 \title{Create basemap}
 \usage{
-get_basemap(nav, states, countries, places, bathy, crs)
+get_basemap(nav, states, countries, labels, bathy, crs)
 }
 \arguments{
 \item{nav}{Data frame containing navigation data, used to set map boundaries.}
@@ -13,11 +13,11 @@ get_basemap(nav, states, countries, places, bathy, crs)
 
 \item{countries}{Simple feature with country boundaries.}
 
+\item{labels}{A data frame with names and locations of landmark labels.}
+
 \item{bathy}{Simple feature with bathymetr contours.}
 
 \item{crs}{Coordinate reference system (CRS) for map projection.}
-
-\item{landmarks}{A data frame with names and locations of landmarks.}
 }
 \value{
 A ggplot2 map object.
