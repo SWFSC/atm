@@ -27,13 +27,10 @@ get_basemap <- function(nav, states, countries, labels, bathy, crs) {
     ggplot2::geom_sf(data = states, fill = "gray90", colour = "gray50") +
     # Plot landmarks
     ggplot2::geom_point(data = labels, aes(X, Y), size = 2, colour = 'gray50') +
-    ggplot2::geom_text(data  = labels, aes(X, Y, label = name),
-                                colour = 'black', size = 2, fontface = 'bold',
-                                hjust = 0, nudge_x = 0.2, nudge_y = 0.05, angle = 25) +
-    # shadowtext::geom_shadowtext(data  = labels, aes(X, Y, label = name),
-    #                             colour = 'gray20', size = 2, fontface = 'bold',
-    #                             hjust = 0, nudge_x = 0.2, nudge_y = 0.05, angle = 25,
-    #                             bg.colour = "white") +
+    shadowtext::geom_shadowtext(data  = labels, aes(X, Y, label = name),
+                                colour = 'gray20', size = 2, fontface = 'bold',
+                                hjust = 0, nudge_x = 0.2, nudge_y = 0.05, angle = 25,
+                                bg.colour = "white") +
     # Format axes and titles
     xlab("Longitude") + ylab("Latitude") +
     ggplot2::coord_sf(crs = crs,
