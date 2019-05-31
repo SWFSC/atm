@@ -19,5 +19,9 @@ cal_extract(filename, vessel.name, survey.name, cal.group = "SWFSC ")
 A list containing calibration information, results, and ping data.
 }
 \description{
+<<<<<<< HEAD
 Extract calibration results from ER60 (.txt) or EK80 (.xml) software.
+=======
+Extract calibration results.
+>>>>>>> 4446ef31300e632399dad9c27b9ae57a65f84b73
 }
