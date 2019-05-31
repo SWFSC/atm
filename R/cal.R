@@ -1,9 +1,5 @@
 #' Extract calibration results.
-<<<<<<< HEAD
 #' @description Extract calibration results from ER60 (.txt) or EK80 (.xml) software.
-=======
-#'
->>>>>>> 4446ef31300e632399dad9c27b9ae57a65f84b73
 #' @param filename An string containing the name of the calibration file.
 #' @param vessel.name A string containing the vessel name.
 #' @param survey.name A string containing the surven name.
