@@ -6,7 +6,7 @@
 #' @param cal.group A string containing the name of the calibration group.
 #' @return A list containing calibration information, results, and ping data.
 #' @export
-cal_extract <- function(filename, vessel.name, survey.name, cal.group = "SWFSC ") {
+extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC ") {
   if (stringr::str_detect(filename, ".xml")) {
     # Read cal files
     cal <- xml2::read_xml(filename)

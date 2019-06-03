@@ -1,3 +1,9 @@
+# header.filename <- "C:/CODE/atm/data/CTD/test.hdr"
+# cast.filename   <- "C:/CODE/atm/data/CTD/test_processed.asc"
+#
+header.filename <- "C:/CODE/atm/data/UCTD/test.asc"
+cast.filename   <- "C:/CODE/atm/data/UCTD/test_processed.asc"
+
 #' Extract header and cast information from CTD and UCTD casts.
 #'
 #' @param header.filename Name of header file.
@@ -77,9 +83,8 @@ extract_ctd <- function(header.filename, cast.filename, type) {
   }
 
   # Combine data frames for export
-  header <- data.frame(cast = header.filename, cast.date, sn)
-  cast
+  header <- data.frame(cast = header.filename, cast.date = cast.date, sn = sn)
 
   # Export header and cast data as a list
-  return(list(header = header, cast = cast))
+  list(header = header, cast = cast)
 }
