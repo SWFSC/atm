@@ -23,4 +23,5 @@ Imports:
     stringr,
     purrr,
     xml2,
-    readr
+    readr,
+    forecast

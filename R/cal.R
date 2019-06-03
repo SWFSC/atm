@@ -4,11 +4,6 @@
 #' @param vessel.name A string containing the vessel name.
 #' @param survey.name A string containing the surven name.
 #' @param cal.group A string containing the name of the calibration group.
-#' @import xml2
-#' @import stringr
-#' @import lubridate
-#' @import glue
-#' @import dplyr
 #' @return A list containing calibration information, results, and ping data.
 #' @export
 cal_extract <- function(filename, vessel.name, survey.name, cal.group = "SWFSC ") {

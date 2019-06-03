@@ -6,7 +6,6 @@
 #' @param TL A vector containing total length (in cm).
 #' @return A data frame with target strength, backscattering coefficient, and
 #'   weight estimates.
-#' @import dplyr
 #' @examples
 #' estimate_ts("Sardinops sagax", TL)
 #' @export

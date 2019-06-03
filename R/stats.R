@@ -17,8 +17,6 @@
 #' @param boot.number A vector defining the number of bootstrap samples.
 #' @return A data frame containing estimates of biomass and abundance or a list
 #'   of biomass, abundance, and length frequency.
-#' @import dplyr
-#' @import stringr
 #' @examples
 #' estimate_bootstrap(nasc.df, clf.df, stratum.num, stratum.area,
 #' "Engraulis mordax", do.lf = TRUE, boot.num = 1000)
@@ -209,7 +207,6 @@ estimate_bootstrap <- function(nasc.df, clf.df,
 #'   Trachurus symmetricus).
 #' @return A data frame with the stratum areas and point estimates of total
 #'   biomass.
-#' @import dplyr
 #' @examples
 #' estimate_point(df, stratum.area, "Engraulis mordax")
 #' @export

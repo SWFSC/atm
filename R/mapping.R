@@ -7,7 +7,6 @@
 #' @param bathy Simple feature with bathymetr contours.
 #' @param crs Coordinate reference system (CRS) for map projection.
 #' @return A ggplot2 map object.
-#' @import ggplot2
 #' @importFrom magrittr "%>%"
 #' @examples
 #' get_basemap(nav, states, countries, landmarks, bathy, crs = 3310)

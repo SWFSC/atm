@@ -5,7 +5,6 @@
 #' @param x2 Destination longitude.
 #' @param y2 Destination latitude.
 #' @return A vector containing the distance from origin to destination.
-#' @import dplyr
 #' @examples
 #' calc_dist(long1, lat1, long2, lat2)
 #' @export

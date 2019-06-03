@@ -50,9 +50,6 @@ xtrct <- function(doc, target) {
 #' @return A data frame of named child vectors.
 #' @seealso See \url{https://rpubs.com/hrbrmstr/xml2power} for original
 #'   functions, and related helper function \code{\link{xtrct}}
-#' @import xml2
-#' @import purrr
-#' @import readr
 #' @export
 xtrct_df <- function(doc, top) {
   xml2::xml_find_first(doc, sprintf(".//%s", top)) %>%
