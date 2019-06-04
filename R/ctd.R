@@ -29,6 +29,11 @@ extract_ctd_header <- function(header.filename, type) {
     sn <- as.numeric(stringr::str_extract(
       unlist(stringr::str_extract_all(header.txt,
                                       pattern = '\\*SerialNumber=\\d{8}'))[1],"\\d{8}"))
+
+    # Extract cast name from file name
+    cast <- tail(stringr::str_split(header.filename, "/")[[1]], n = 1) %>%
+      stringr::str_replace(".asc", "")
+
   } else if (type == "CTD") {
     # Process CTD header file -----------------------------------------------------
     # Read header text
@@ -49,10 +54,14 @@ extract_ctd_header <- function(header.filename, type) {
     }
     # Set serial number to NA
     sn <- NA
+
+    # Extract cast name from file name
+    cast <- tail(stringr::str_split(header.filename, "/")[[1]], n = 1) %>%
+      stringr::str_replace(".hdr", "")
   }
 
   # Combine data frames for export
-  data.frame(cast = header.filename, cast.date = cast.date, sn = sn)
+  data.frame(cast = cast, path = header.filename, cast.date = cast.date, sn = sn)
 }
 
 #' Extract cast data from CTD and UCTD casts.
@@ -62,6 +71,10 @@ extract_ctd_header <- function(header.filename, type) {
 #' @return A data frame containing cast data.
 #' @export
 extract_ctd_cast <- function(cast.filename, type) {
+  # Extract cast name from file path
+  cast <- tail(stringr::str_split(cast.filename, "/")[[1]], n = 1) %>%
+    stringr::str_replace("_processed.asc", "")
+
   if (type == "UCTD") {
     # Process UCTD cast -------------------------------------------------------
     # Read cast data and rename columns
@@ -76,7 +89,8 @@ extract_ctd_cast <- function(cast.filename, type) {
         dZ   = c(1, diff(Z)), # Calculate change in depth (dZ, m)
         dZt  =  as.numeric(forecast::ma(dZ/dt, order = 5)),
         Z    = -Z,
-        cast = cast.filename)
+        cast = cast,
+        path = cast.filename)
 
   } else if (type == "CTD") {
     # Process CTD cast --------------------------------------------------------
@@ -86,6 +100,7 @@ extract_ctd_cast <- function(cast.filename, type) {
                     Sv = SvCM, avgsvCM = AvgsvCM, Dens = Density00, Flag = Flag) %>%
       dplyr::mutate(
         Z    = -Z, # Make depth negative
-        cast = cast.filename)
+        cast = cast,
+        path = cast.filename)
   }
 }
