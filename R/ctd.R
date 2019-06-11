@@ -87,7 +87,8 @@ extract_ctd_cast <- function(cast.filename, type) {
         s    = scan/16,       # Calculate time (s) from scan (scan rate is 16 Hz)
         dt   = c(0, diff(s)), # Calculate time interval
         dZ   = c(1, diff(Z)), # Calculate change in depth (dZ, m)
-        dZt  =  as.numeric(forecast::ma(dZ/dt, order = 5)),
+        dZt  = as.numeric(forecast::ma(dZ/dt, order = 5)),
+        dZt  = na_if(dZt, Inf),
         Z    = -Z,
         cast = cast,
         path = cast.filename)

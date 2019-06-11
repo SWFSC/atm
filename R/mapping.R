@@ -5,17 +5,23 @@
 #' @param countries Simple feature with country boundaries.
 #' @param labels A data frame with names and locations of landmark labels.
 #' @param bathy Simple feature with bathymetr contours.
+#' @param boundaries User-specified bounding box (optional).
 #' @param crs Coordinate reference system (CRS) for map projection.
 #' @return A ggplot2 map object.
 #' @importFrom magrittr "%>%"
 #' @examples
 #' get_basemap(nav, states, countries, landmarks, bathy, crs = 3310)
 #' @export
-get_basemap <- function(nav, states, countries, labels, bathy, crs) {
-  # Set padding around data
-  map.bounds <- nav %>%
-    sf::st_transform(crs = crs) %>%
-    sf::st_bbox()
+get_basemap <- function(nav, states, countries, labels, bathy, boundaries = NULL, crs) {
+  if (is.null(boundaries)) {
+    # Define boundaries using nav input
+    map.bounds <- nav %>%
+      sf::st_transform(crs = crs) %>%
+      sf::st_bbox()
+  } else {
+    # Use user-provided bbox
+    map.bounds <- boundaries
+  }
 
   # Create map object
   ggplot2::ggplot() +
