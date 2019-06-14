@@ -29,7 +29,7 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
     comments             <- as.character(NA)
 
     # Extract sounder info ------------------------------------------
-    sounder.type         <- Transceiver$SoftwareVersion
+    sounder.type         <- as.character(Transceiver$SoftwareVersion)
 
     # Extract reference target info -------------------------------------------
     target.type          <- TargetReference$Name
@@ -203,7 +203,7 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
     gpt.rcr.bw         <- as.numeric(stringr::str_extract(unlist(
       stringr::str_extract_all(cal, pattern = 'Receiver Bandwidth\\s+\\S+\\s+kHz')),"[-0-9]{1,}\\.[0-9]{1,}"))*1000
     # extract sounder info
-    sounder.type       <- glue::trim(stringr::str_extract(cal[which(cal == "#  Sounder Type:") + 1],"[^#]+"))
+    sounder.type       <- as.character(glue::trim(stringr::str_extract(cal[which(cal == "#  Sounder Type:") + 1],"[^#]+")))
 
     # extract TS detection info
     ts.min.val         <- as.numeric(stringr::str_extract(unlist(
