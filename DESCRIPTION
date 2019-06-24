@@ -24,4 +24,5 @@ Imports:
     purrr,
     xml2,
     readr,
-    forecast
+    forecast,
+    vroom
