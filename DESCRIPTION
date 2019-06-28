@@ -13,6 +13,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Suggests: 
     testthat
+Depends:
+    R (>= 3.5.0)
 Imports: 
     ggplot2,
     magrittr,
