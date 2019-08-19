@@ -141,15 +141,14 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
     cal.ver <- stringr::str_extract(stringr::str_subset(cal, pattern = 'Calibration  Version\\s+\\S+\\s*'),
                                     "[0-9].*[0-9]")
     # extract calibration date
-    cal.date    <- as.POSIXct(
-      stringr::str_extract(stringr::str_subset(cal, pattern = 'Date:\\s+\\S+'), "[0-9].*[0-9]"),
-      tz = "GMT", format = "%m/%d/%Y")
+    cal.date    <- lubridate::mdy(
+      stringr::str_extract(stringr::str_subset(cal, pattern = 'Date:\\s+\\S+'), "[0-9].*[0-9]"))
     if (is.na(cal.date) == TRUE) { #use alternate date format
-      cal.date  <- as.POSIXct(strinr::str_extract(
-        stringr::str_subset(cal, pattern = 'Date:\\s+\\S+'),"[0-9].*[0-9]"),tz = "GMT",format = "%Y-%m-%d")
+      cal.date  <- lubridate::ymd(strinr::str_extract(
+        stringr::str_subset(cal, pattern = 'Date:\\s+\\S+'),"[0-9].*[0-9]"))
     }
     # extract comments; sub semi colons for commas
-    comments           <- gsub(",", ";", glue::trim(stringr::str_extract(cal[which(cal == "#  Comments:") + 1],"[^#]+")))
+    comments <- gsub(",", ";", glue::trim(stringr::str_extract(cal[which(cal == "#  Comments:") + 1],"[^#]+")))
 
     # extract reference target info
     target.ts          <- as.numeric(stringr::str_extract(unlist(
@@ -336,10 +335,9 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
     names(cal.pings) <- c("ping_num","date_time","distance","TS_c",
                           "TS_u","athw","along","sA")
 
-    # paste date and time and convert time to POSIXct
+    # paste date and time and convert time to dttm
     cal.pings <- cal.pings %>%
-      dplyr::mutate(date_time = as.POSIXct(paste(cal.date, .$date_time, sep = " "),
-                                           tz = "GMT", format = "%Y-%m-%d %H:%M:%S"))
+      dplyr::mutate(date_time = lubridate::ymd_hms(paste(cal.date, .$date_time)))
 
     # Get index of ping that crosses midnight
     date.id <- which(c(0, diff(cal.pings$date_time)) < 0)
