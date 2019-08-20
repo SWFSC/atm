@@ -11,9 +11,9 @@ project_df(df, lat, long, crs.geog = 4326, crs.proj)
 \item{df}{A data frame with geographic coordinates (latitude and longitude,
 in decimal degrees) and a WGS84 CRS (4326).}
 
-\item{lat}{The column containing latitude values (decimal degrees).}
+\item{lat}{The quoted column name containing latitude values (decimal degrees).}
 
-\item{long}{The column containing longitude values (decimal degrees).}
+\item{long}{The quoted column name containing longitude values (decimal degrees).}
 
 \item{crs.proj}{The new projected coordinate reference system.}
 }
