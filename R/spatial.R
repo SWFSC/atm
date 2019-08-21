@@ -137,24 +137,23 @@ project_sf <- function(sf, crs) {
 }
 
 #' Project a data frame with geographic coordinates to a different coordinate
-#' reference system (CRS).
+#' reference system (CRS) while retaining the original coordinates.
 #'
 #' @param df A data frame with geographic coordinates (latitude and longitude,
 #'   in decimal degrees) and a WGS84 CRS (4326).
-#' @param crs.proj The new projected coordinate reference system.
-#' @param lat The quoted column name containing latitude values (decimal degrees).
-#' @param long The quoted column name containing longitude values (decimal degrees).
-#' @return A data frame with a different CRS.
+#' @param from The new projected coordinate reference system.
+#' @param to The new projected coordinate reference system.
+#' @return The original data frame and new columns for X and Y in a second coordinate system.
 #' @examples
-#' project_df(df, lat, long, crs.proj = 3310)
+#' project_df(df, from = 4326, to = 3310)
 #' @export
-project_df <- function(df, lat, long, crs.geog = 4326, crs.proj) {
+project_df <- function(df, from = 4326, to) {
   # Convert data frame to sf, extract geographic coordinates, and project
-  df <- sf::st_as_sf(df, coords = c(long, lat), crs = crs.geog) %>%
+  df <- sf::st_as_sf(df, coords = c("long", "lat"), crs = from) %>%
     dplyr::mutate(
       long = as.data.frame(sf::st_coordinates(.))$X,
       lat = as.data.frame(sf::st_coordinates(.))$Y) %>%
-    sf::st_transform(crs = crs.proj)
+    sf::st_transform(crs = to)
 
   # Get coordinates in projected x/y
   df.xy <- as.data.frame(sf::st_coordinates(df))

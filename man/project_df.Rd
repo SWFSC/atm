@@ -3,27 +3,25 @@
 \name{project_df}
 \alias{project_df}
 \title{Project a data frame with geographic coordinates to a different coordinate
-reference system (CRS).}
+reference system (CRS) while retaining the original coordinates.}
 \usage{
-project_df(df, lat, long, crs.geog = 4326, crs.proj)
+project_df(df, from = 4326, to)
 }
 \arguments{
 \item{df}{A data frame with geographic coordinates (latitude and longitude,
 in decimal degrees) and a WGS84 CRS (4326).}
 
-\item{lat}{The quoted column name containing latitude values (decimal degrees).}
+\item{from}{The new projected coordinate reference system.}
 
-\item{long}{The quoted column name containing longitude values (decimal degrees).}
-
-\item{crs.proj}{The new projected coordinate reference system.}
+\item{to}{The new projected coordinate reference system.}
 }
 \value{
-A data frame with a different CRS.
+The original data frame and new columns for X and Y in a second coordinate system.
 }
 \description{
 Project a data frame with geographic coordinates to a different coordinate
-reference system (CRS).
+reference system (CRS) while retaining the original coordinates.
 }
 \examples{
-project_df(df, lat, long, crs.proj = 3310)
+project_df(df, from = 4326, to = 3310)
 }
