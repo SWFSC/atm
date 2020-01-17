@@ -4,8 +4,15 @@
 \alias{estimate_bootstrap}
 \title{Calculate bootstrap estimates of species biomass}
 \usage{
-estimate_bootstrap(nasc.df, clf.df, stratum.num, stratum.area,
-  species = NULL, do.lf = FALSE, boot.number = 0)
+estimate_bootstrap(
+  nasc.df,
+  clf.df,
+  stratum.num,
+  stratum.area,
+  species = NULL,
+  do.lf = FALSE,
+  boot.number = 0
+)
 }
 \arguments{
 \item{nasc.df}{A data frame containing total backscatter from all CPS
