@@ -144,7 +144,7 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
     cal.date    <- lubridate::mdy(
       stringr::str_extract(stringr::str_subset(cal, pattern = 'Date:\\s+\\S+'), "[0-9].*[0-9]"))
     if (is.na(cal.date) == TRUE) { #use alternate date format
-      cal.date  <- lubridate::ymd(strinr::str_extract(
+      cal.date  <- lubridate::ymd(stringr::str_extract(
         stringr::str_subset(cal, pattern = 'Date:\\s+\\S+'),"[0-9].*[0-9]"))
     }
     # extract comments; sub semi colons for commas
