@@ -2,7 +2,7 @@
 #' @description Extract calibration results from ER60 (.txt) or EK80 (.xml) software.
 #' @param filename An string containing the name of the calibration file.
 #' @param vessel.name A string containing the vessel name.
-#' @param survey.name A string containing the surven name.
+#' @param survey.name A string containing the survey name.
 #' @param cal.group A string containing the name of the calibration group.
 #' @return A list containing calibration information, results, and ping data.
 #' @export
@@ -413,4 +413,155 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
 
   # Return calibration information as a list of tibbles
   list(cal.res = cal.res, cal.info = cal.info, cal.pings = cal.pings)
+}
+
+#' Extract calibration results from calibrations in FM-mode.
+#' @description Extract calibration results from ER60 (.txt) or EK80 (.xml) software.
+#' @param filename An string containing the name of the calibration file.
+#' @param vessel.name A string containing the vessel name.
+#' @param survey.name A string containing the survey name.
+#' @param cal.group A string containing the name of the calibration group.
+#' @return A data frame containing frequency, gain, beam angles, and beam offsets.
+#' @export
+extract_cal_fm <- function(filename, vessel.name, survey.name, cal.group = "SWFSC ") {
+  if (stringr::str_detect(filename, ".xml")) {
+    # Read cal files
+    cal <- xml2::read_xml(filename)
+
+    # Extract group data
+    Application          <- xtrct_df(cal, "Application")
+    EnvironmentData      <- xtrct_df(cal, "EnvironmentData")
+    Transducer           <- xtrct_df(cal, "Transducer")
+    Transceiver          <- xtrct_df(cal, "Transceiver")
+    TransceiverSettings  <- xtrct_df(cal, "TransceiverSetting")
+    TargetReference      <- xtrct_df(cal, "TargetReference")
+    SingleTargetSettings <- xtrct_df(cal, "SingleTargetDetectorSetting")
+    PreviousModelParams  <- xtrct_df(cal, "PreviousModelParameters")
+    CalibrationResults   <- xtrct_df(cal, "CalibrationResults")
+    Hits                 <- xtrct_df(cal, "HitData")
+
+    # Get calibration info ----------------------------------------------------
+    cal.ver              <- Application$SoftwareVersion
+    cal.date             <- lubridate::ymd_hms(xtrct_df(cal, "Common")$TimeOfFileCreation)
+    comments             <- as.character(NA)
+
+    # Extract sounder info ------------------------------------------
+    sounder.type         <- as.character(Transceiver$SoftwareVersion)
+
+    # Extract reference target info -------------------------------------------
+    target.type          <- TargetReference$Name
+    # For the response and frequency, take mid value of 1000 values
+    target.response      <- as.numeric(unlist(stringr::str_split(TargetReference$Response,";")))
+    target.frequency     <- as.numeric(unlist(stringr::str_split(TargetReference$Frequency,";")))
+    target.speed.long    <- TargetReference$LongitudinalSoundSpeed
+    target.speed.trans   <- TargetReference$TransversalSoundSpeed
+    target.ts            <- target.response[length(target.response)/2]
+    target.dev           <- SingleTargetSettings$TsDeviation
+    target.mind          <- min(SingleTargetSettings$Range)
+    target.maxd          <- max(SingleTargetSettings$Range)
+
+    # Extract transducer (txdr) info ------------------------------------------
+    txdr.type            <- Transducer$Name
+    txdr.sn              <- Transducer$SerialNumber
+    # txdr.freq            <- CalibrationResults$Frequency/1000
+    txdr.freq            <- as.numeric(unlist(stringr::str_split(CalibrationResults$Frequency,";")))/1000
+    txdr.beam.type       <- stringr::str_replace(TransceiverSettings$BeamType, "BeamType","")
+    txdr.gain            <- PreviousModelParams$Gain
+    txdr.2way.ba         <- PreviousModelParams$EquivalentBeamAngle
+    txdr.athw.ang.sens   <- PreviousModelParams$AngleSensitivityAthwartship
+    txdr.alon.ang.sens   <- PreviousModelParams$AngleSensitivityAlongship
+    txdr.athw.ba         <- PreviousModelParams$BeamWidthAthwartship
+    txdr.alon.ba         <- PreviousModelParams$BeamWidthAlongship
+    txdr.athw.oa         <- PreviousModelParams$AngleOffsetAthwartship
+    txdr.alon.oa         <- PreviousModelParams$AngleOffsetAlongship
+    txdr.sa.corr         <- PreviousModelParams$SaCorrection
+    txdr.z               <- Transducer$TransducerDepth
+
+    # Extract transceiver (gpt) info ------------------------------------------
+    gpt.type             <- stringr::str_replace(Transceiver$Type, "TransceiverType","")
+    gpt.pd               <- TransceiverSettings$PulseLength * 1000
+    gpt.si               <- TransceiverSettings$SampleInterval * 1000
+    gpt.power            <- TransceiverSettings$TransmitPower
+    gpt.pulse.form       <- TransceiverSettings$PulseForm
+    gpt.freq.start       <- TransceiverSettings$FrequencyStart
+    gpt.freq.end         <- TransceiverSettings$FrequencyEnd
+    gpt.rcr.bw           <- NA
+
+    # Extract TS detection info ------------------------------------------
+    ts.min.val           <- SingleTargetSettings$MinTSValue
+    ts.min.spacing       <- SingleTargetSettings$MinSpacing
+    ts.max.beam.comp     <- SingleTargetSettings$MaxGainCompensation
+    ts.min.echo.l        <- SingleTargetSettings$MinEchoLength*100
+    ts.max.echo.l        <- SingleTargetSettings$MaxEchoLength*100
+    ts.max.phase.dev     <- SingleTargetSettings$MaxPhaseDeviation
+
+    # Extract environment info ------------------------------------------
+    env.c                <- EnvironmentData$SoundVelocity
+    env.alpha            <- EnvironmentData$AbsorptionCoefficient * 1000
+
+    # Extract beam model results ----------------------------------------------
+    bm.txdr.gain         <- as.numeric(unlist(stringr::str_split(CalibrationResults$Gain,";")))
+    bm.sa.corr           <- as.numeric(unlist(stringr::str_split(CalibrationResults$SaCorrection,";")))
+    bm.athw.ba           <- as.numeric(unlist(stringr::str_split(CalibrationResults$BeamWidthAthwartship,";")))
+    bm.alon.ba           <- as.numeric(unlist(stringr::str_split(CalibrationResults$BeamWidthAlongship,";")))
+    bm.athw.oa           <- as.numeric(unlist(stringr::str_split(CalibrationResults$AngleOffsetAthwartship,";")))
+    bm.alon.oa           <- as.numeric(unlist(stringr::str_split(CalibrationResults$AngleOffsetAlongship,";")))
+
+    # Extract data deviation from beam model results --------------------------
+    dev.bm.rms           <- CalibrationResults$TsRmsError
+    dev.bm.max           <- NA # "Max\\s*=\\s*\\S+\\s+dB"
+    dev.bm.max.no        <- NA # "No.\\s*=\\s*\\S+\\s+"
+    dev.bm.max.athw      <- NA # "Athw.\\s*=\\s*\\S+\\s+"
+    dev.bm.max.alon      <- NA # "Along.\\s*=\\s*\\S+\\s+"
+    dev.bm.min           <- NA # "Min\\s*=\\s*\\S+\\s+dB"
+    dev.bm.min.no        <- NA # "No.\\s*=\\s*\\S+\\s+"
+    dev.bm.min.athw      <- NA # "Athw.\\s*=\\s*\\S+\\s+"
+    dev.bm.min.alon      <- NA # "Along.\\s*=\\s*\\S+\\s+"
+
+    # Extract data deviation from polynomial model results --------------------
+    dev.poly.rms         <- NA # "RMS\\s*=\\s*\\S+\\s+dB"
+    dev.poly.max         <- NA # "Max\\s*=\\s*\\S+\\s+dB"
+    dev.poly.max.no      <- NA # "No.\\s*=\\s*\\S+\\s+"
+    dev.poly.max.athw    <- NA # "Athw.\\s*=\\s*\\S+\\s+"
+    dev.poly.max.alon    <- NA # "Along.\\s*=\\s*\\S+\\s+"
+    dev.poly.min         <- NA # "Min\\s*=\\s*\\S+\\s+dB"
+    dev.poly.min.no      <- NA # "No.\\s*=\\s*\\S+\\s+"
+    dev.poly.min.athw    <- NA # "Athw.\\s*=\\s*\\S+\\s+"
+    dev.poly.min.alon    <- NA # "Along.\\s*=\\s*\\S+\\s+"
+
+    # create a id for merging data tables
+    id <- paste(format(cal.date, "%Y%m%d"),"_",
+                format(Hits$Time[1], format = "%HH%MM%SS"),"_",
+                vessel.name, "_", min(txdr.freq), "-", max(txdr.freq), "kHz_", cal.group, sep = "")
+
+    # extract ping data from end of file
+    # extract all rows below header (do not start with #)
+    cal.pings <- Hits %>%
+      dplyr::select(ping_num = Number,
+                    date_time = Time,
+                    distance = Range,
+                    TS_c = TsComp,
+                    TS_u = TsUncomp,
+                    athw = Athwart,
+                    along = Along,
+                    sA = SaValue,
+                    outlier = IsSuspended) %>%
+      dplyr::mutate(
+        txdr_freq = paste0(min(txdr.freq), "-", max(txdr.freq)),
+        outlier = dplyr::case_when(
+          outlier == FALSE ~ 0,
+          outlier == TRUE  ~ 1),
+        `id` = id)
+
+  }
+
+  # create a data frame for calibration results
+  # create a cal_results.txt table, to hold summary data about transducer calibrations from cal/LOBE files
+  cal.res <- tibble::tibble(freq = txdr.freq, gain = bm.txdr.gain,
+                            sa.corr = bm.sa.corr, ba.athw = bm.athw.ba,
+                            ba.alon = bm.alon.ba, oa.athw = bm.athw.oa,
+                            oa.alon = bm.alon.oa)
+
+  # Return calibration information as a list of tibbles
+  list(cal.res = cal.res)
 }

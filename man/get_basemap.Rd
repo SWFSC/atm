@@ -4,8 +4,7 @@
 \alias{get_basemap}
 \title{Create basemap}
 \usage{
-get_basemap(nav, states, countries, labels, bathy, boundaries = NULL,
-  crs)
+get_basemap(nav, states, countries, labels, bathy, boundaries = NULL, crs)
 }
 \arguments{
 \item{nav}{Data frame containing navigation data, used to set map boundaries.}
