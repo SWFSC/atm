@@ -2,10 +2,13 @@
 
 S3method(is.nan,df)
 export(calc_dist)
+export(convert_length)
 export(estimate_bootstrap)
 export(estimate_inshore)
+export(estimate_length)
 export(estimate_point)
 export(estimate_ts)
+export(estimate_weight)
 export(extract_cal)
 export(extract_cal_fm)
 export(extract_csv)
