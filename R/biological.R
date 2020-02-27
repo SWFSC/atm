@@ -18,34 +18,36 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "OLS", 
 
   if (scientificName == "Clupea pallasii") {
     if (model.type == "GLM") {
-      weightg = exp(-13.140)*totalLength_mm^3.253
+      weightg <- exp(-13.140)*totalLength_mm^3.253
     } else if (model.type == "OLS") {
-      weightg = exp(-13.156+0.044)*totalLength_mm^3.256
+      weightg <- exp(-13.156+0.044)*totalLength_mm^3.256
     }
   } else if (scientificName == "Engraulis mordax") {
     if (model.type == "GLM") {
-      weightg = exp(-12.847 + (i_s*0.087))*totalLength_mm^3.167
+      weightg <- exp(-12.847 + (i_s*0.087))*totalLength_mm^3.167
     } else if (model.type == "OLS") {
-      weightg = exp(-13.043 + 0.071 + (i_s*0.086))*totalLength_mm^3.206
+      weightg <- exp(-13.043 + 0.071 + (i_s*0.086))*totalLength_mm^3.206
     }
   } else if (scientificName == "Sardinops sagax") {
     if (model.type == "GLM") {
-      weightg = exp(-12.475 + (i_s*0.174))*totalLength_mm^3.121
+      weightg <- exp(-12.475 + (i_s*0.174))*totalLength_mm^3.121
     } else if (model.type == "OLS") {
-      weightg = exp(-12.555 + 0.052 + (i_s*0.172))*totalLength_mm^3.135
+      weightg <- exp(-12.555 + 0.052 + (i_s*0.172))*totalLength_mm^3.135
     }
   } else if (scientificName == "Scomber japonicus") {
     if (model.type == "GLM") {
-      weightg = exp(-12.631 + (i_s*0.083))*totalLength_mm^3.165
+      weightg <- exp(-12.631 + (i_s*0.083))*totalLength_mm^3.165
     } else if (model.type == "OLS") {
-      weightg = exp(-12.650 + 0.045 + (i_s*0.082))*totalLength_mm^3.168
+      weightg <- exp(-12.650 + 0.045 + (i_s*0.082))*totalLength_mm^3.168
     }
   } else if (scientificName == "Trachurus symmetricus") {
     if (model.type == "GLM") {
-      weightg = exp(-12.108 + (i_s*0.074))*totalLength_mm^3.069
+      weightg <- exp(-12.108 + (i_s*0.074))*totalLength_mm^3.069
     } else if (model.type == "OLS") {
-      weightg = exp(-12.149 + 0.044 + (i_s*0.072))*totalLength_mm^3.076
+      weightg <- exp(-12.149 + 0.044 + (i_s*0.072))*totalLength_mm^3.076
     }
+  } else {
+    weightg <- NA
   }
 
   # Return weight estimate
@@ -72,34 +74,36 @@ estimate_length <- function(scientificName, weightg, model.type = "OLS", season)
 
   if (scientificName == "Clupea pallasii") {
     if (model.type == "GLM") {
-      totalLength_mm = (weightg/exp(-13.140))^(1/3.253)
+      totalLength_mm <- (weightg/exp(-13.140))^(1/3.253)
     } else if (model.type == "OLS") {
-      totalLength_mm = (weightg/exp(-13.156+0.044))^(1/3.256)
+      totalLength_mm <- (weightg/exp(-13.156+0.044))^(1/3.256)
     }
   } else if (scientificName == "Engraulis mordax") {
     if (model.type == "GLM") {
-      totalLength_mm = (weightg/exp(-12.847 + (i_s*0.087)))^(1/3.167)
+      totalLength_mm <- (weightg/exp(-12.847 + (i_s*0.087)))^(1/3.167)
     } else if (model.type == "OLS") {
-      totalLength_mm = (weightg/exp(-13.043 + 0.071 + (i_s*0.086)))^(1/3.206)
+      totalLength_mm <- (weightg/exp(-13.043 + 0.071 + (i_s*0.086)))^(1/3.206)
     }
   } else if (scientificName == "Sardinops sagax") {
     if (model.type == "GLM") {
-      totalLength_mm = (weightg/exp(-12.475 + (i_s*0.174)))^(1/3.121)
+      totalLength_mm <- (weightg/exp(-12.475 + (i_s*0.174)))^(1/3.121)
     } else if (model.type == "OLS") {
-      totalLength_mm = (weightg/exp(-12.555 + 0.052 + (i_s*0.172)))^(1/3.135)
+      totalLength_mm <- (weightg/exp(-12.555 + 0.052 + (i_s*0.172)))^(1/3.135)
     }
   } else if (scientificName == "Scomber japonicus") {
     if (model.type == "GLM") {
-      totalLength_mm = (weightg/exp(-12.631 + (i_s*0.083)))^(1/3.165)
+      totalLength_mm <- (weightg/exp(-12.631 + (i_s*0.083)))^(1/3.165)
     } else if (model.type == "OLS") {
-      totalLength_mm = (weightg/exp(-12.650 + 0.045 + (i_s*0.082)))^(1/3.168)
+      totalLength_mm <- (weightg/exp(-12.650 + 0.045 + (i_s*0.082)))^(1/3.168)
     }
   } else if (scientificName == "Trachurus symmetricus") {
     if (model.type == "GLM") {
-      totalLength_mm = (weightg/exp(-12.108 + (i_s*0.074)))^(1/3.069)
+      totalLength_mm <- (weightg/exp(-12.108 + (i_s*0.074)))^(1/3.069)
     } else if (model.type == "OLS") {
-      totalLength_mm = (weightg/exp(-12.149 + 0.044 + (i_s*0.072)))^(1/3.076)
+      totalLength_mm <- (weightg/exp(-12.149 + 0.044 + (i_s*0.072)))^(1/3.076)
     }
+  } else {
+    totalLength_mm <- NA
   }
 
   # Return weight estimate
@@ -125,123 +129,125 @@ convert_length <- function(scientificName, L.in, from, to) {
     # Convert from TL
     if (from == "TL") {
       if (to == "SL") {
-        L.out = (L.in + 1.607)/1.200
+        L.out <- (L.in + 1.607)/1.200
       } else if (to == "FL") {
-        L.out = (L.in + 0.323)/1.110
+        L.out <- (L.in + 0.323)/1.110
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from SL
     } else if (from == "SL") {
       if (to == "TL") {
-        L.out = 1.200*L.in - 1.607
+        L.out <- 1.200*L.in - 1.607
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from FL
     } else if (from == "FL") {
       if (to == "TL") {
-        L.out = 1.110*L.in - 0.323
+        L.out <- 1.110*L.in - 0.323
       } else if (to == "SL") {
-        L.out = NA
+        L.out <- NA
       }
     }
   } else if (scientificName == "Engraulis mordax") {
     # Convert from TL
     if (from == "TL") {
       if (to == "SL") {
-        L.out = (L.in - 5.100)/1.137
+        L.out <- (L.in - 5.100)/1.137
       } else if (to == "FL") {
-        L.out = (L.in - 1.870)/1.081
+        L.out <- (L.in - 1.870)/1.081
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from SL
     } else if (from == "SL") {
       if (to == "TL") {
-        L.out = 1.137*L.in + 5.100
+        L.out <- 1.137*L.in + 5.100
       } else if (to == "FL") {
-        L.out = (L.in + 5.736)/0.965
+        L.out <- (L.in + 5.736)/0.965
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from FL
     } else if (from == "FL") {
       if (to == "TL") {
-        L.out = 1.081*L.in + 1.870
+        L.out <- 1.081*L.in + 1.870
       } else if (to == "SL") {
-        L.out = 0.965*L.in - 5.736
+        L.out <- 0.965*L.in - 5.736
       } else {
-        L.out = NA
+        L.out <- NA
       }
     }
   } else if (scientificName == "Sardinops sagax") {
     # Convert from TL
     if (from == "TL") {
       if (to == "SL") {
-        L.out = (L.in - 0.724)/1.157
+        L.out <- (L.in - 0.724)/1.157
       } else if (to == "FL") {
-        L.out = (L.in + 5.036)/1.134
+        L.out <- (L.in + 5.036)/1.134
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from SL
     } else if (from == "SL") {
       if (to == "TL") {
-        L.out = 1.157*L.in + 0.724
+        L.out <- 1.157*L.in + 0.724
       } else if (to == "FL") {
-        L.out = (L.in + 5.243)/0.980
+        L.out <- (L.in + 5.243)/0.980
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from FL
     } else if (from == "FL") {
       if (to == "TL") {
-        L.out = 1.134*L.in - 5.036
+        L.out <- 1.134*L.in - 5.036
       } else if (to == "SL") {
-        L.out = 0.980*L.in - 5.243
+        L.out <- 0.980*L.in - 5.243
       } else {
-        L.out = NA
+        L.out <- NA
       }
     }
   } else if (scientificName == "Scomber japonicus") {
     # Convert from TL
     if (from == "TL") {
       if (to == "FL") {
-        L.out = (L.in + 4.114)/1.115
+        L.out <- (L.in + 4.114)/1.115
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from SL
     } else if (from == "SL") {
-      L.out = NA
+      L.out <- NA
       # Convert from FL
     } else if (from == "FL") {
       if (to == "TL") {
-        L.out = 1.115*L.in - 4.114
+        L.out <- 1.115*L.in - 4.114
       } else {
-        L.out = NA
+        L.out <- NA
       }
     }
   } else if (scientificName == "Trachurus symmetricus") {
     # Convert from TL
     if (from == "TL") {
       if (to == "FL") {
-        L.out = (L.in - 0.896)/1.110
+        L.out <- (L.in - 0.896)/1.110
       } else {
-        L.out = NA
+        L.out <- NA
       }
       # Convert from SL
     } else if (from == "SL") {
-      L.out = NA
+      L.out <- NA
       # Convert from FL
     } else if (from == "FL") {
       if (to == "TL") {
-        L.out = 1.110*L.in + 0.896
+        L.out <- 1.110*L.in + 0.896
       } else {
-        L.out = NA
+        L.out <- NA
       }
     }
+  } else {
+    L.out <- NA
   }
   # Return converted length
   return(L.out)
