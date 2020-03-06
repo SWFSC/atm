@@ -4,7 +4,7 @@
 \alias{estimate_length}
 \title{Estimate CPS length}
 \usage{
-estimate_length(scientificName, weightg, model.type = "OLS", season)
+estimate_length(scientificName, weightg, model.type = "GLM", season)
 }
 \arguments{
 \item{scientificName}{A vector containing the species' scientific name (Clupea
@@ -25,5 +25,5 @@ Calculate the estimated length of CPS species from a known weight measurement, u
 models presented in Palance et al. 2019.
 }
 \examples{
-estimate_length("Sardinops sagax", 5, model.type = "OLS", "summer")
+estimate_length("Sardinops sagax", 5, model.type = "GLM", "summer")
 }

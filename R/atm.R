@@ -11,15 +11,16 @@
 #' @export
 estimate_ts <- function(species, TL) {
   # Create data frame from inputs
-  df.all <- data.frame(species, TL) %>%
-    dplyr::mutate(id = seq(1,n()))
+  df.in <- data.frame(species, TL) %>%
+    dplyr::mutate(id = seq_along(species))
+
   # Create data frame for results
-  df.final <- data.frame()
+  df.out <- data.frame()
 
   # Estimate target strength for each species
-  for (i in unique(df.all$species)) {
+  for (i in unique(df.in$species)) {
     # Filter by species i
-    df <- dplyr::filter(df.all, species == i)
+    df <- dplyr::filter(df.in, species == i)
 
     # If sardine
     if (i == "Sardinops sagax")    {
@@ -77,8 +78,8 @@ estimate_ts <- function(species, TL) {
       # AST L/W
       df$true.wg      <- exp(-10.997)*(df$TL/10)^2.757
     }
-    df.final <- dplyr::bind_rows(df.final, df)
+    df.out <- dplyr::bind_rows(df.out, df)
   }
 
-  dplyr::arrange(df.final, id)
+  dplyr::arrange(df.out, id)
 }

@@ -4,7 +4,7 @@
 \alias{estimate_weight}
 \title{Estimate CPS weight}
 \usage{
-estimate_weight(scientificName, totalLength_mm, model.type = "OLS", season)
+estimate_weight(scientificName, totalLength_mm, model.type = "GLM", season)
 }
 \arguments{
 \item{scientificName}{A vector containing the species' scientific name (Clupea
@@ -25,5 +25,5 @@ Calculate the estimated weight of CPS species from a known length measurement, u
 models presented in Palance et al. 2019.
 }
 \examples{
-estimate_weight("Sardinops sagax", 300, model.type = "OLS", "summer")
+estimate_weight("Sardinops sagax", 300, model.type = "GLM", "summer")
 }

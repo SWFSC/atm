@@ -11,18 +11,18 @@ convert_length(scientificName, L.in, from, to)
 pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
 Trachurus symmetricus).}
 
-\item{L.in}{The length measurement (unitless) to be converted.}
+\item{L.in}{The length measurement to be converted (unitless) .}
 
-\item{from}{The measurement type to be converted from.}
+\item{from}{The measurement type from which length is converted.}
 
-\item{to}{The measurement type to be converted to.}
+\item{to}{The measurement type to which length is converted.}
 }
 \value{
-The converted length.
+The converted length (unitless).
 }
 \description{
 Converts between various length measures (total length (TL), standard length (SL), and fork length (FL)) for CPS species,
-using the major-axis regression models presented in Palance et al. 2019.
+using the major-axis regression models presented in Palance et al. 2019. Not all conversions are possible. In such cases, \code{NA} is returned.
 }
 \examples{
 convert_length("Sardinops sagax", 20, model.type = "OLS", "summer")
