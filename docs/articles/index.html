@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert CPS length — convert_length • atm</title>
+<title>Articles • atm</title>
 
 
 <!-- jquery -->
@@ -35,10 +35,7 @@
 
 
 
-<meta property="og:title" content="Convert CPS length — convert_length" />
-<meta property="og:description" content="Converts between various length measures (total length (TL), standard length (SL), and fork length (FL)) for CPS species,
-using the major-axis regression models presented in Palance et al. 2019. Not all conversions are possible. In such cases, NA is returned." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -57,7 +54,7 @@ using the major-axis regression models presented in Palance et al. 2019. Not all
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -119,56 +116,18 @@ using the major-axis regression models presented in Palance et al. 2019. Not all
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert CPS length</h1>
-    
-    <div class="hidden name"><code>convert_length.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    <p>Converts between various length measures (total length (TL), standard length (SL), and fork length (FL)) for CPS species,
-using the major-axis regression models presented in Palance et al. 2019. Not all conversions are possible. In such cases, <code>NA</code> is returned.</p>
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="atm.html">atm</a></li>
+        <li><a href="estimateBiomass.html">estimateBiomass</a></li>
+      </ul>
     </div>
-
-    <pre class="usage"><span class='fu'>convert_length</span>(<span class='no'>scientificName</span>, <span class='no'>L.in</span>, <span class='no'>from</span>, <span class='no'>to</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>scientificName</th>
-      <td><p>A vector containing the species' scientific name (Clupea
-pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
-Trachurus symmetricus).</p></td>
-    </tr>
-    <tr>
-      <th>L.in</th>
-      <td><p>The length measurement to be converted (unitless) .</p></td>
-    </tr>
-    <tr>
-      <th>from</th>
-      <td><p>The measurement type from which length is converted.</p></td>
-    </tr>
-    <tr>
-      <th>to</th>
-      <td><p>The measurement type to which length is converted.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>The converted length (unitless).</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>convert_length</span>(<span class='st'>"Sardinops sagax"</span>, <span class='fl'>20</span>, <span class='kw'>model.type</span> <span class='kw'>=</span> <span class='st'>"OLS"</span>, <span class='st'>"summer"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in convert_length("Sardinops sagax", 20, model.type = "OLS", "summer"): unused argument (model.type = "OLS")</span></div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
   </div>
 </div>
 

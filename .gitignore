@@ -3,3 +3,4 @@
 .RData
 *.png
 data/*
+inst/doc
