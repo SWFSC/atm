@@ -13,17 +13,18 @@ extract_ctd_header <- function(header.filename, type) {
     # Extract cast date as dttm
     cast.date  <- lubridate::dmy_hms(
       stringr::str_extract(
-        unlist(stringr::str_extract_all(header.txt,
-                             pattern = '\\*Cast[\\s\\S]*end')),
+        unlist(
+          stringr::str_extract_all(header.txt,
+                                   pattern = '\\*Cast[\\s\\S]*\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}')),
         '\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}'))
 
-    if (length(cast.date) == 0) {
-      cast.date  <- lubridate::dmy_hms(
-        stringr::str_extract(
-          unlist(stringr::str_extract_all(header.txt,
-                                        pattern = '\\*Cast[\\s\\S]*stop')),
-          '\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}'))
-    }
+    # if (length(cast.date) == 0) {
+    #   cast.date  <- lubridate::dmy_hms(
+    #     stringr::str_extract(
+    #       unlist(stringr::str_extract_all(header.txt,
+    #                                     pattern = '\\*Cast[\\s\\S]*stop')),
+    #       '\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}'))
+    # }
 
     # Extract probe serial number
     sn <- as.numeric(stringr::str_extract(
@@ -49,7 +50,7 @@ extract_ctd_header <- function(header.filename, type) {
       cast.date  <- lubridate::mdy_hms(
         stringr::str_extract(
           unlist(stringr::str_extract_all(
-            header.txt, pattern = '\\*Cast[\\s\\S]*stop')),
+            header.txt, pattern = '\\*Cast[\\s\\S]*\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}')),
           "\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}"))
     }
     # Set serial number to NA
