@@ -61,6 +61,9 @@ extract_ctd_header <- function(header.filename, type) {
       stringr::str_replace(".hdr", "")
   }
 
+  # If all date parsing fails, return NA
+  if (length(cast.date) == 0) cast.date <- NA
+
   # Combine data frames for export
   data.frame(cast = cast, path = header.filename, cast.date = cast.date, sn = sn)
 }
