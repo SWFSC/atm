@@ -6,7 +6,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 clone_estimATM <- function(repo_url = "https://github.com/kstierhoff/estimATM", path, overwrite = FALSE) {
   if (exists(path)) {
     if (overwrite) {
