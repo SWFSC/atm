@@ -1,46 +1,10 @@
 library(tidyverse)
 
-anchovy <- readRDS("data/final.anchovy.rds") %>%
-  mutate(scientificName = "Engraulis mordax")
+# Load specimen data
+specimens <- readRDS("data/specimens.rds")
 
-herring <- readRDS("data/final.herring.rds") %>%
-  mutate(scientificName = "Clupea pallasii")
-
-jackmack <- readRDS("data/final.jackmac.rds") %>%
-  mutate(scientificName = "Trachurus symmetricus")
-
-pacmack <- readRDS("data/final.pacmac.rds") %>%
-  mutate(scientificName = "Scomber japonicus")
-
-sardine <- readRDS("data/final.sardine.rds") %>%
-  mutate(scientificName = "Sardinops sagax")
-
-cps.data <- anchovy %>%
-  bind_rows(herring) %>%
-  bind_rows(jackmack) %>%
-  bind_rows(pacmack) %>%
-  bind_rows(sardine) %>%
-  select(cruise, ship, haul, collection, scientificName, standardLength_mm, forkLength_mm,
-         totalLength_mm, weightg, sex, year, season)
-
-saveRDS(cps.data, file = "data/cps_specimen_data.rds")
-
-cps.plot <- cps.data %>%
-  select(scientificName, season, sex, weightg, totalLength_mm, standardLength_mm, forkLength_mm) %>%
-  pivot_longer(cols = c(totalLength_mm, standardLength_mm, forkLength_mm),
-               names_to = "length_type",
-               values_to = "measurement") %>%
-  filter(!is.na(weightg)) %>%
-  ungroup()
-
-
-# ggplot(cps.plot, aes(measurement, weightg, colour = length_type)) +
-#   geom_point(alpha = 0.2) +
-#   facet_grid(rows = vars(length_type), cols = vars(scientificName),
-#              scales = "free") +
-#   theme_bw()
-
-ggplot(filter(cps.plot, !is.na(measurement)),
+# Plot L/W data
+ggplot(filter(specimens, !is.na(measurement)),
               aes(measurement, weightg, colour = length_type)) +
   geom_point(alpha = 0.2) +
   facet_wrap(~scientificName,
@@ -81,7 +45,7 @@ lw.df <- lw.df %>%
 ggplot() +
   geom_line(data = lw.df, aes(measurement, weightg, colour = length_type),
             linetype = "dashed", size = 1) +
-  geom_point(data = filter(cps.plot, !is.na(measurement)),
+  geom_point(data = filter(specimens, !is.na(measurement)),
        aes(measurement, weightg, colour = length_type), alpha = 0.2) +
   facet_wrap(~scientificName,
              scales = "free") +

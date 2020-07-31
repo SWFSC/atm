@@ -1,3 +1,4 @@
 ^atm\.Rproj$
 ^\.Rproj\.user$
 ^dev\.R$
+^data-raw$

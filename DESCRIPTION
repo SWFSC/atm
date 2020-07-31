@@ -29,5 +29,6 @@ Imports:
     xml2,
     readr,
     forecast,
-    vroom
+    vroom,
+    ggspatial
 VignetteBuilder: knitr
