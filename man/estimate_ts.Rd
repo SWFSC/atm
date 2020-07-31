@@ -4,14 +4,16 @@
 \alias{estimate_ts}
 \title{Estimate target strength of CPS from total length}
 \usage{
-estimate_ts(species, TL)
+estimate_ts(species, TL, units = "mm")
 }
 \arguments{
 \item{species}{A vector containing the species' scientific name (Clupea
 pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
 Trachurus symmetricus).}
 
-\item{TL}{A vector containing total length (in cm).}
+\item{TL}{A vector containing total length.}
+
+\item{units}{Length units (e.g., "mm" or "cm").}
 }
 \value{
 A data frame with target strength, backscattering coefficient, and
@@ -21,5 +23,5 @@ weight estimates.
 Estimate target strength of CPS from total length
 }
 \examples{
-estimate_ts("Sardinops sagax", TL)
+estimate_ts("Sardinops sagax", TL, units = "mm")
 }

@@ -3,16 +3,22 @@
 #' @param species A vector containing the species' scientific name (Clupea
 #'   pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
 #'   Trachurus symmetricus).
-#' @param TL A vector containing total length (in cm).
+#' @param TL A vector containing total length.
+#' @param units Length units (e.g., "mm" or "cm").
 #' @return A data frame with target strength, backscattering coefficient, and
 #'   weight estimates.
 #' @examples
-#' estimate_ts("Sardinops sagax", TL)
+#' estimate_ts("Sardinops sagax", TL, units = "mm")
 #' @export
-estimate_ts <- function(species, TL) {
+estimate_ts <- function(species, TL, units = "mm") {
   # Create data frame from inputs
   df.in <- data.frame(species, TL) %>%
     dplyr::mutate(id = seq_along(species))
+
+  # Convert to cm, if necessary
+  if (units == "mm") {
+    df.in$TL <- df.in$TL/10
+  }
 
   # Create data frame for results
   df.out <- data.frame()
@@ -24,59 +30,59 @@ estimate_ts <- function(species, TL) {
 
     # If sardine
     if (i == "Sardinops sagax")    {
-      df$TS.wg        <- -14.9*log10(df$TL/10) - 13.21
+      df$TS.wg        <- -14.9*log10(df$TL) - 13.21
       df$sigma.wg     <- 10^(df$TS.wg/10)
       # dB individual^-1^
-      df$TS.ind       <- 17.07*log10(df$TL/10) - 66.73
+      df$TS.ind       <- 17.07*log10(df$TL) - 66.73
       df$sigma.ind    <- 10^(df$TS.ind/10)
       # Barange df to weight
-      df$estimated.wg <- 4.446313e-06*(df$TL/10)^3.197
+      df$estimated.wg <- 4.446313e-06*(df$TL)^3.197
       # AST L/W
-      df$true.wg      <- exp(-10.997)*(df$TL/10)^2.757
+      df$true.wg      <- exp(-10.997)*(df$TL)^2.757
     }
     # If anchovy (must be verified)
     if (i == "Engraulis mordax")    {
-      df$TS.wg        <- -13.87*log10(df$TL/10) - 11.797
+      df$TS.wg        <- -13.87*log10(df$TL) - 11.797
       df$sigma.wg     <- 10^(df$TS.wg/10)
       # dB individual^-1^ (b~20~)
-      df$TS.ind       <- 20*log10(df$TL/10) - 68.09875
+      df$TS.ind       <- 20*log10(df$TL) - 68.09875
       df$sigma.ind    <- 10^(df$TS.ind/10)
       # AST L/W; updated summer 2016
-      df$estimated.wg <- exp(-12.964)*(df$TL/10)^3.387
-      df$true.wg      <- exp(-12.964)*(df$TL/10)^3.387
+      df$estimated.wg <- exp(-12.964)*(df$TL)^3.387
+      df$true.wg      <- exp(-12.964)*(df$TL)^3.387
     }
     # If Pacific mackerel
     if (i == "Scomber japonicus") {
-      df$TS.wg        <- -15.44*log10(df$TL/10) - 7.75
+      df$TS.wg        <- -15.44*log10(df$TL) - 7.75
       df$sigma.wg     <- 10^(df$TS.wg/10)
       # dB individual^-1^
-      df$TS.ind       <- 14.66*log10(df$TL/10) - 58.72
+      df$TS.ind       <- 14.66*log10(df$TL) - 58.72
       df$sigma.ind    <- 10^(df$TS.ind/10)
-      df$estimated.wg <- 7.998343e-06*(df$TL/10)^3.01
-      df$true.wg      <- 7.998343e-06*(df$TL/10)^3.01
+      df$estimated.wg <- 7.998343e-06*(df$TL)^3.01
+      df$true.wg      <- 7.998343e-06*(df$TL)^3.01
     }
     # If Jack mackerel
     if (i == "Trachurus symmetricus") {
-      df$TS.wg        <- -15.44*log10(df$TL/10) - 7.75
+      df$TS.wg        <- -15.44*log10(df$TL) - 7.75
       df$sigma.wg     <- 10^(df$TS.wg/10)
       # dB individual^-1^
-      df$TS.ind       <- 14.66*log10(df$TL/10) - 58.72
+      df$TS.ind       <- 14.66*log10(df$TL) - 58.72
       df$sigma.ind    <- 10^(df$TS.ind/10)
-      df$estimated.wg <- 7.998343e-06*(df$TL/10)^3.01
-      df$true.wg      <- 7.998343e-06*(df$TL/10)^3.01
+      df$estimated.wg <- 7.998343e-06*(df$TL)^3.01
+      df$true.wg      <- 7.998343e-06*(df$TL)^3.01
     }
     # If Pacific herring
     if (i == "Clupea pallasii")    {
       # Depth-compensated target strength
-      df$TS.wg        <- -11.97*log10(df$TL/10) - 11.58561
+      df$TS.wg        <- -11.97*log10(df$TL) - 11.58561
       df$sigma.wg     <- 10^(df$TS.wg/10)
       # Depth-compensated target strength
-      df$TS.ind       <- 20*log10(df$TL/10) - 65.10561
+      df$TS.ind       <- 20*log10(df$TL) - 65.10561
       df$sigma.ind    <- 10^(df$TS.ind/10)
       # Barange L/W
-      df$estimated.wg <- 4.446313e-06*(df$TL/10)^3.197
+      df$estimated.wg <- 4.446313e-06*(df$TL)^3.197
       # AST L/W
-      df$true.wg      <- exp(-10.997)*(df$TL/10)^2.757
+      df$true.wg      <- exp(-10.997)*(df$TL)^2.757
     }
     df.out <- dplyr::bind_rows(df.out, df)
   }
