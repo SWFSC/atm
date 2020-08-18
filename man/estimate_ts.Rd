@@ -7,16 +7,16 @@
 estimate_ts(species, TL, units = "mm")
 }
 \arguments{
-\item{species}{A vector containing the species' scientific name (Clupea
+\item{species}{A value or vector containing the species' scientific name (Clupea
 pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
 Trachurus symmetricus).}
 
-\item{TL}{A vector containing total length.}
+\item{TL}{A value or vector containing total length measurements.}
 
-\item{units}{Length units (e.g., "mm" or "cm").}
+\item{units}{Length measurement units (e.g., "mm" or "cm"). If mm, lengths are converted to cm internally but returned in cm.}
 }
 \value{
-A data frame with target strength, backscattering coefficient, and
+A data frame with species name, total length, target strength, backscattering coefficients, and
 weight estimates.
 }
 \description{

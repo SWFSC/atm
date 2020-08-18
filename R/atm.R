@@ -1,11 +1,11 @@
 #' Estimate target strength of CPS from total length
 #'
-#' @param species A vector containing the species' scientific name (Clupea
+#' @param species A value or vector containing the species' scientific name (Clupea
 #'   pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
 #'   Trachurus symmetricus).
-#' @param TL A vector containing total length.
-#' @param units Length units (e.g., "mm" or "cm").
-#' @return A data frame with target strength, backscattering coefficient, and
+#' @param TL A value or vector containing total length measurements.
+#' @param units Length measurement units (e.g., "mm" or "cm"). If mm, lengths are converted to cm internally but returned in cm.
+#' @return A data frame with species name, total length, target strength, backscattering coefficients, and
 #'   weight estimates.
 #' @examples
 #' estimate_ts("Sardinops sagax", TL, units = "mm")
@@ -85,6 +85,11 @@ estimate_ts <- function(species, TL, units = "mm") {
       df$true.wg      <- exp(-10.997)*(df$TL)^2.757
     }
     df.out <- dplyr::bind_rows(df.out, df)
+  }
+
+  # Convert to cm, if necessary
+  if (units == "mm") {
+    df.out$TL <- df.out$TL*10
   }
 
   dplyr::arrange(df.out, id)
