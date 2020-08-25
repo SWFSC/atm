@@ -30,5 +30,6 @@ Imports:
     readr,
     forecast,
     vroom,
-    ggspatial
+    ggspatial,
+    data.table
 VignetteBuilder: knitr

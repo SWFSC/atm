@@ -5,8 +5,9 @@
 #' @return A data frame containing vertically integrated backscatter data.
 #' @export
 extract_csv <- function(filename) {
-  # Read csv file
-  tmp <- vroom::vroom(filename, delim = ",")
+  # Read CSV file
+  tmp <- data.table::fread(filename, sep = ",")
+
   # Extract transect name from the file name
   transect <- tail(unlist(stringr::str_split(filename, "/")), n = 1) %>%
     stringr::str_split("_") %>%

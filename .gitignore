@@ -4,3 +4,4 @@
 *.png
 data/*
 inst/doc
+R/debug.R
