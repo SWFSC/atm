@@ -60,7 +60,7 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
           df$weightg <- exp(-12.149 + 0.044 + (i_s*0.072))*df$totalLength_mm^3.076
         }
       } else {
-        df$weightg <- NA
+        df$weightg <- NA_real_
       }
       # Combine results
       df.out <- dplyr::bind_rows(df.out, df)
@@ -131,7 +131,7 @@ estimate_length <- function(scientificName, weightg, model.type = "GLM", season)
           df$totalLength_mm <- (df$weightg/exp(-12.149 + 0.044 + (i_s*0.072)))^(1/3.076)
         }
       } else {
-        df$totalLength_mm <- NA
+        df$totalLength_mm <- NA_real_
       }
       # Combine results
       df.out <- dplyr::bind_rows(df.out, df)
@@ -177,21 +177,21 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "FL") {
               df$L.out <- (df$L.in + 0.323)/1.110
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from SL
           } else if (j == "SL") {
             if (k == "TL") {
               df$L.out <- 1.200*df$L.in - 1.607
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from FL
           } else if (j == "FL") {
             if (k == "TL") {
               df$L.out <- 1.110*df$L.in - 0.323
             } else if (k == "SL") {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
           }
         } else if (i == "Engraulis mordax") {
@@ -202,7 +202,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "FL") {
               df$L.out <- (df$L.in - 1.870)/1.081
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from SL
           } else if (j == "SL") {
@@ -211,7 +211,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "FL") {
               df$L.out <- (df$L.in + 5.736)/0.965
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from FL
           } else if (j == "FL") {
@@ -220,7 +220,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "SL") {
               df$L.out <- 0.965*df$L.in - 5.736
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
           }
         } else if (i == "Sardinops sagax") {
@@ -231,7 +231,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "FL") {
               df$L.out <- (df$L.in + 5.036)/1.134
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from SL
           } else if (j == "SL") {
@@ -240,7 +240,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "FL") {
               df$L.out <- (df$L.in + 5.243)/0.980
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from FL
           } else if (j == "FL") {
@@ -249,7 +249,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             } else if (k == "SL") {
               df$L.out <- 0.980*df$L.in - 5.243
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
           }
         } else if (i == "Scomber japonicus") {
@@ -258,17 +258,17 @@ convert_length <- function(scientificName, L.in, from, to) {
             if (k == "FL") {
               df$L.out <- (df$L.in + 4.114)/1.115
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from SL
           } else if (j == "SL") {
-            df$L.out <- NA
+            df$L.out <- NA_real_
             # Convert from FL
           } else if (j == "FL") {
             if (k == "TL") {
               df$L.out <- 1.115*df$L.in - 4.114
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
           }
         } else if (i == "Trachurus symmetricus") {
@@ -277,21 +277,21 @@ convert_length <- function(scientificName, L.in, from, to) {
             if (k == "FL") {
               df$L.out <- (df$L.in - 0.896)/1.110
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
             # Convert from SL
           } else if (j == "SL") {
-            df$L.out <- NA
+            df$L.out <- NA_real_
             # Convert from FL
           } else if (j == "FL") {
             if (k == "TL") {
               df$L.out <- 1.110*df$L.in + 0.896
             } else {
-              df$L.out <- NA
+              df$L.out <- NA_real_
             }
           }
         } else {
-          df$L.out <- NA
+          df$L.out <- NA_real_
         }
         # Combine results
         df.out <- dplyr::bind_rows(df.out, df)
