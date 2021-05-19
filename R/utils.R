@@ -18,7 +18,7 @@ extract_csv <- function(filename) {
 
   # Create variable cps.nasc if not already present
   if (is.cps) {
-    if (!cps.nasc %in% colnames(tmp)) {
+    if (!"cps.nasc" %in% colnames(tmp)) {
       tmp$cps.nasc <- NA_real_
     }
   }
