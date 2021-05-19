@@ -16,6 +16,13 @@ extract_csv <- function(filename) {
   # Are data from CPS?
   is.cps <- ifelse(stringr::str_detect(filename, "CPS"), TRUE, FALSE)
 
+  # Create variable cps.nasc if not already present
+  if (is.cps) {
+    if (!cps.nasc %in% colnames(tmp)) {
+      tmp$cps.nasc <- NA_real_
+    }
+  }
+
   # Summarize NASC by interval
   tmp %>%
     dplyr::group_by(Interval) %>%
@@ -49,6 +56,7 @@ extract_csv <- function(filename) {
       NASC.250 = sum(NASC[Layer_depth_max <= 250]),
       NASC.350 = sum(NASC[Layer_depth_max <= 350]),
       NASC     = NASC.250,
+      cps.nasc = cps.nasc[1],
       depth    = max(Layer_depth_max) + 3,
       CPS      = ifelse(is.cps, 1, 0),
       filename = filename,
