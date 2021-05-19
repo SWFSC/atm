@@ -18,8 +18,8 @@ extract_csv <- function(filename) {
 
   # Create variable cps.nasc if not already present
   if (is.cps) {
-    if (!"cps.nasc" %in% colnames(tmp)) {
-      tmp$cps.nasc <- NA_real_
+    if (!"cps.NASC" %in% colnames(tmp)) {
+      tmp$cps.NASC <- NA_real_
     }
   }
 
@@ -56,7 +56,7 @@ extract_csv <- function(filename) {
       NASC.250 = sum(NASC[Layer_depth_max <= 250]),
       NASC.350 = sum(NASC[Layer_depth_max <= 350]),
       NASC     = NASC.250,
-      cps.nasc = cps.nasc[1],
+      cps.nasc = cps.NASC[1],
       depth    = max(Layer_depth_max) + 3,
       CPS      = ifelse(is.cps, 1, 0),
       filename = filename,
