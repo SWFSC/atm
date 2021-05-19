@@ -56,7 +56,7 @@ extract_csv <- function(filename) {
       NASC.250 = sum(NASC[Layer_depth_max <= 250]),
       NASC.350 = sum(NASC[Layer_depth_max <= 350]),
       NASC     = NASC.250,
-      cps.nasc = cps.NASC[1],
+      cps.NASC = sum(cps.NASC),
       depth    = max(Layer_depth_max) + 3,
       CPS      = ifelse(is.cps, 1, 0),
       filename = filename,
