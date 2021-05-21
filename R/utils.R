@@ -16,13 +16,6 @@ extract_csv <- function(filename) {
   # Are data from CPS?
   is.cps <- ifelse(stringr::str_detect(filename, "CPS"), TRUE, FALSE)
 
-  # Create variable cps.nasc if not already present
-  if (is.cps) {
-    if (!"cps.NASC" %in% colnames(tmp)) {
-      tmp$cps.NASC <- NA_real_
-    }
-  }
-
   # Summarize NASC by interval
   if ("cps.NASC" %in% colnames(tmp)) {
     tmp %>%

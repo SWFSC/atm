@@ -1,7 +1,7 @@
 Package: atm
 Type: Package
 Title: Functions Used for the Analysis of Acoustic-Trawl Method (ATM) Survey Data
-Version: 0.5
+Version: 0.5.1
 Authors@R: person("Stierhoff", "Kevin", email =
  "Kevin.Stierhoff@noaa.gov", role = c("aut", "cre"))
 Maintainer: Kevin L. Stierhoff <kevin.stierhoff@noaa.gov>
