@@ -87,8 +87,8 @@ extract_ctd_cast <- function(cast.filename, type) {
                     Z = DepSM, S = Sal00, Sv = SvCM, avgsVCM = AvgsvCM,
                     Dens = Density00, Flag = Flag) %>%
       dplyr::mutate(
-        scan = scan - 1,
-        s    = scan/16,       # Calculate time (s) from scan (scan rate is 16 Hz)
+        scan = scan - min(scan),
+        s    = scan/16 - min(scan/16), # Calculate time (s) from scan (scan rate is 16 Hz)
         dt   = c(0, diff(s)), # Calculate time interval
         dZ   = c(1, diff(Z)), # Calculate change in depth (dZ, m)
         dZt  = as.numeric(forecast::ma(dZ/dt, order = 5)),
