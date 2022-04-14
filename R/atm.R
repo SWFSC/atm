@@ -84,6 +84,20 @@ estimate_ts <- function(species, TL, units = "mm") {
       # AST L/W
       df$true.wg      <- exp(-10.997)*(df$TL)^2.757
     }
+    # If round herring
+    if (i == "Etrumeus acuminatus")    {
+      # Placeholder, using P. herring for now
+      # Depth-compensated target strength
+      df$TS.wg        <- -11.97*log10(df$TL) - 11.58561
+      df$sigma.wg     <- 10^(df$TS.wg/10)
+      # Depth-compensated target strength
+      df$TS.ind       <- 20*log10(df$TL) - 65.10561
+      df$sigma.ind    <- 10^(df$TS.ind/10)
+      # Barange L/W
+      df$estimated.wg <- 4.446313e-06*(df$TL)^3.197
+      # AST L/W
+      df$true.wg      <- exp(-10.997)*(df$TL)^2.757
+    }
     df.out <- dplyr::bind_rows(df.out, df)
   }
 
