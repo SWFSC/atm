@@ -59,7 +59,7 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
         } else if (j == "OLS") {
           df$weightg <- exp(-12.149 + 0.044 + (i_s*0.072))*df$totalLength_mm^3.076
         }
-      } elseif (i == "Etrumeus acuminatus") {
+      } else if (i == "Etrumeus acuminatus") {
         # For round herring, use P. herring
         if (j == "GLM") {
           df$weightg <- exp(-13.140)*df$totalLength_mm^3.253
@@ -137,7 +137,7 @@ estimate_length <- function(scientificName, weightg, model.type = "GLM", season)
         } else if (j == "OLS") {
           df$totalLength_mm <- (df$weightg/exp(-12.149 + 0.044 + (i_s*0.072)))^(1/3.076)
         }
-      } elseif (i == "Etrumeus acuminatus") {
+      } else if (i == "Etrumeus acuminatus") {
         # For round herring, use P. herring
         if (j == "GLM") {
           df$totalLength_mm <- (df$weightg/exp(-13.140))^(1/3.253)
