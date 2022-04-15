@@ -59,6 +59,13 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
         } else if (j == "OLS") {
           df$weightg <- exp(-12.149 + 0.044 + (i_s*0.072))*df$totalLength_mm^3.076
         }
+      } elseif (i == "Etrumeus acuminatus") {
+        # For round herring, use P. herring
+        if (j == "GLM") {
+          df$weightg <- exp(-13.140)*df$totalLength_mm^3.253
+        } else if (j == "OLS") {
+          df$weightg <- exp(-13.156 + 0.044)*df$totalLength_mm^3.256
+        }
       } else {
         df$weightg <- NA_real_
       }
@@ -129,6 +136,13 @@ estimate_length <- function(scientificName, weightg, model.type = "GLM", season)
           df$totalLength_mm <- (df$weightg/exp(-12.108 + (i_s*0.074)))^(1/3.069)
         } else if (j == "OLS") {
           df$totalLength_mm <- (df$weightg/exp(-12.149 + 0.044 + (i_s*0.072)))^(1/3.076)
+        }
+      } elseif (i == "Etrumeus acuminatus") {
+        # For round herring, use P. herring
+        if (j == "GLM") {
+          df$totalLength_mm <- (df$weightg/exp(-13.140))^(1/3.253)
+        } else if (j == "OLS") {
+          df$totalLength_mm <- (df$weightg/exp(-13.156+0.044))^(1/3.256)
         }
       } else {
         df$totalLength_mm <- NA_real_
@@ -287,6 +301,32 @@ convert_length <- function(scientificName, L.in, from, to) {
             if (k == "TL") {
               df$L.out <- 1.110*df$L.in + 0.896
             } else {
+              df$L.out <- NA_real_
+            }
+          }
+        } else if (i == "Etrumeus acuminatus") {
+          # For round herring, use P. herring
+          # Convert from TL
+          if (j == "TL") {
+            if (k == "SL") {
+              df$L.out <- (df$L.in + 1.607)/1.200
+            } else if (k == "FL") {
+              df$L.out <- (df$L.in + 0.323)/1.110
+            } else {
+              df$L.out <- NA_real_
+            }
+            # Convert from SL
+          } else if (j == "SL") {
+            if (k == "TL") {
+              df$L.out <- 1.200*df$L.in - 1.607
+            } else {
+              df$L.out <- NA_real_
+            }
+            # Convert from FL
+          } else if (j == "FL") {
+            if (k == "TL") {
+              df$L.out <- 1.110*df$L.in - 0.323
+            } else if (k == "SL") {
               df$L.out <- NA_real_
             }
           }
