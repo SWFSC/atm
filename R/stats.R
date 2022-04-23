@@ -48,6 +48,19 @@ estimate_bootstrap <- function(nasc.df, clf.df,
              sigmaindiv = sigmaindiv.her,
              meanwg     = meanwg.her)
 
+  } else if (species == "Etrumeus acuminatus") {
+    # Create a length-based weight vector
+    # FL converted to TL from Palance
+    # TL converted to W from sardine
+    weight.vec <- 4.446313e-06*((-0.323 + L.vec*10*1.110)/10)^3.197
+
+    nasc.df <- nasc.df %>%
+      dplyr::select(transect, cluster, cps.nasc, prop.rher, sigmawg.rher, sigmaindiv.rher, meanwg.rher) %>%
+      dplyr::rename(prop       = prop.rher,
+                    sigmawg    = sigmawg.rher,
+                    sigmaindiv = sigmaindiv.rher,
+                    meanwg     = meanwg.rher)
+
   } else if (species == "Engraulis mordax") {
     # Create a length-based weight vector
     weight.vec <-  exp(-12.964)*((2.056 + L.vec*10*1.1646)/10)^3.387
@@ -235,6 +248,9 @@ estimate_point <- function(df, stratum.area, species){
     } else if (species == "Trachurus symmetricus") {
       prop    <- df.sub$prop.jack
       sigmawg <- df.sub$sigmawg.jack
+    } else if (species == "Etrumeus acuminatus") {
+      prop    <- df.sub$prop.rher
+      sigmawg <- df.sub$sigmawg.rher
     }
     # Calculate total polygon biomass, in tons
     biomass.total <- c(biomass.total,
