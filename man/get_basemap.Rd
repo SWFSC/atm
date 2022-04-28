@@ -4,7 +4,16 @@
 \alias{get_basemap}
 \title{Create basemap}
 \usage{
-get_basemap(nav, states, countries, labels, bathy, boundaries = NULL, crs)
+get_basemap(
+  nav,
+  states,
+  countries,
+  labels,
+  bathy,
+  boundaries = NULL,
+  add.labels = TRUE,
+  crs
+)
 }
 \arguments{
 \item{nav}{Data frame containing navigation data, used to set map boundaries.}
@@ -18,6 +27,8 @@ get_basemap(nav, states, countries, labels, bathy, boundaries = NULL, crs)
 \item{bathy}{Simple feature with bathymetr contours.}
 
 \item{boundaries}{User-specified bounding box (optional).}
+
+\item{add.labels}{Add landmark labels (TRUE/FALSE).}
 
 \item{crs}{Coordinate reference system (CRS) for map projection.}
 }
