@@ -3,22 +3,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of atm is to ...
+The {atm} package contains functions used by the Advanced Survey Technologies (AST) Group at NOAA's Southwest Fisheries Science Center (SWFSC), and by the tools contained within the collection of tools ([{estimATM}](https://github.com/kstierhoff/estimATM); private repo) used to plan, execute, analyze data, and report the results from acoustic-trawl method (ATM) surveys of coastal pelagic fish species (CPS). 
 
 ## Installation
 
-You can install the released version of atm from [CRAN](https://CRAN.R-project.org) with:
+You can install or update {atm} from [GitHub](https://github.com/kstierhoff/atm) with:
 
 ``` r
-install.packages("atm")
+# install.packages("devtools")
+devtools::install_github("kstierhoff/atm")
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(atm)
-## basic example code
-```
-
