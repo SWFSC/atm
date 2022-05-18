@@ -17,7 +17,7 @@ extract_csv <- function(filename) {
   is.cps <- ifelse(stringr::str_detect(filename, "CPS"), TRUE, FALSE)
 
   # Summarize NASC by interval
-  if ("cps.NASC" %in% colnames(tmp)) {
+  if ("cps.NASC" %in% colnames(tmp) | "cps.nasc" %in% colnames(tmp)) {
     tmp %>%
       dplyr::group_by(Interval) %>%
       dplyr::summarise(
