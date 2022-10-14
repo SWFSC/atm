@@ -17,9 +17,6 @@ clone_estimATM(
 
 \item{overwrite}{Overwrite existing directory.}
 }
-\value{
-
-}
 \description{
 Clone estimATM repository
 }

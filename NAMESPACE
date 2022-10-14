@@ -2,7 +2,6 @@
 
 S3method(is.nan,df)
 export(calc_dist)
-export(clone_estimATM)
 export(convert_length)
 export(estimate_bootstrap)
 export(estimate_inshore)

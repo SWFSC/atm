@@ -6,7 +6,8 @@
 #' @param cal.group A string containing the name of the calibration group.
 #' @return A list containing calibration information, results, and ping data.
 #' @export
-extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC ") {
+extract_cal <- function(filename, vessel.name = NA_character_, survey.name = NA_character_,
+                        cal.group = NA_character_) {
   if (stringr::str_detect(filename, ".xml")) {
     # Read cal files
     cal <- xml2::read_xml(filename)
@@ -423,7 +424,8 @@ extract_cal <- function(filename, vessel.name, survey.name, cal.group = "SWFSC "
 #' @param cal.group A string containing the name of the calibration group.
 #' @return A data frame containing frequency, gain, beam angles, and beam offsets.
 #' @export
-extract_cal_fm <- function(filename, vessel.name, survey.name, cal.group = "SWFSC ") {
+extract_cal_fm <- function(filename, vessel.name = NA_character_, survey.name = NA_character_,
+                           cal.group = NA_character_) {
   if (stringr::str_detect(filename, ".xml")) {
     # Read cal files
     cal <- xml2::read_xml(filename)

@@ -4,7 +4,12 @@
 \alias{extract_cal}
 \title{Extract calibration results.}
 \usage{
-extract_cal(filename, vessel.name, survey.name, cal.group = "SWFSC ")
+extract_cal(
+  filename,
+  vessel.name = NA_character_,
+  survey.name = NA_character_,
+  cal.group = NA_character_
+)
 }
 \arguments{
 \item{filename}{An string containing the name of the calibration file.}

@@ -3,8 +3,6 @@
 #' @param repo_url URL for estimATM repository on GitHub.
 #' @param path Path to desired project location.
 #' @param overwrite Overwrite existing directory.
-#' @return
-#' @export
 #'
 clone_estimATM <- function(repo_url = "https://github.com/kstierhoff/estimATM", path, overwrite = FALSE) {
   if (exists(path)) {
