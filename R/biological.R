@@ -168,7 +168,7 @@ estimate_length <- function(scientificName, weightg, model.type = "GLM", season)
 #' @return The converted length (unitless).
 #' @export
 #' @examples
-#' convert_length("Sardinops sagax", 20, model.type = "OLS", "summer")
+#' convert_length("Sardinops sagax", L.in = 20, from = "SL", to = "TL")
 convert_length <- function(scientificName, L.in, from, to) {
   # Create a data frame from the input vectors
   df.in <- data.frame(scientificName, L.in, from, to) %>%

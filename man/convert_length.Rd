@@ -25,5 +25,5 @@ Converts between various length measures (total length (TL), standard length (SL
 using the major-axis regression models presented in Palance et al. 2019. Not all conversions are possible. In such cases, \code{NA} is returned.
 }
 \examples{
-convert_length("Sardinops sagax", 20, model.type = "OLS", "summer")
+convert_length("Sardinops sagax", L.in = 20, from = "SL", to = "TL")
 }
