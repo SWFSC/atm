@@ -2,7 +2,7 @@
 % Please edit documentation in R/cal.R
 \name{extract_cal}
 \alias{extract_cal}
-\title{Extract calibration results.}
+\title{Extract calibration results from .txt or .xml files.}
 \usage{
 extract_cal(
   filename,
