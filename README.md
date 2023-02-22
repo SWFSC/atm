@@ -7,7 +7,7 @@ The {atm} package contains functions used by the [Advanced Survey Technologies (
 
 ## Installation
 
-You can install or update {atm} from [GitHub](https://github.com/kstierhoff/atm) with:
+You can install or update {atm} from [GitHub](https://github.com/SWFSC/FRD-AST-atm) with:
 
 ``` r
 # install.packages("devtools")
