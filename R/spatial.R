@@ -141,9 +141,9 @@ project_sf <- function(sf, crs) {
 #'
 #' @param df A data frame with geographic coordinates (latitude and longitude,
 #'   in decimal degrees) and a WGS84 CRS (4326).
-#' @param from The new projected coordinate reference system.
-#' @param to The new projected coordinate reference system.
-#' @return The original data frame and new columns for X and Y in a second coordinate system.
+#' @param from The original geographic CRS.
+#' @param to The new projected CRS.
+#' @return The original data frame and new columns for X and Y in a second CRS.
 #' @examples
 #' project_df(df, from = 4326, to = 3310)
 #' @export

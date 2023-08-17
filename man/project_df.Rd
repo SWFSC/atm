@@ -11,12 +11,12 @@ project_df(df, from = 4326, to)
 \item{df}{A data frame with geographic coordinates (latitude and longitude,
 in decimal degrees) and a WGS84 CRS (4326).}
 
-\item{from}{The new projected coordinate reference system.}
+\item{from}{The original geographic CRS.}
 
-\item{to}{The new projected coordinate reference system.}
+\item{to}{The new projected CRS.}
 }
 \value{
-The original data frame and new columns for X and Y in a second coordinate system.
+The original data frame and new columns for X and Y in a second CRS.
 }
 \description{
 Project a data frame with geographic coordinates to a different coordinate
