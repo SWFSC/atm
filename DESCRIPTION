@@ -31,5 +31,7 @@ Imports:
     forecast,
     vroom,
     ggspatial,
-    data.table
+    data.table,
+    magick,
+    patchwork
 VignetteBuilder: knitr
