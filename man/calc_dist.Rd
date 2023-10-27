@@ -21,6 +21,3 @@ A vector containing the distance from origin to destination.
 \description{
 Calculate distance to a feature
 }
-\examples{
-calc_dist(long1, lat1, long2, lat2)
-}

@@ -5,8 +5,6 @@
 #' @param x2 Destination longitude.
 #' @param y2 Destination latitude.
 #' @return A vector containing the distance from origin to destination.
-#' @examples
-#' calc_dist(long1, lat1, long2, lat2)
 #' @export
 calc_dist <- function(x1, y1, x2, y2) {
   if (length(x2) == 1) {
