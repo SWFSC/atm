@@ -7,7 +7,7 @@ vessel.name <- "Reuben Lasker"
 survey.name <- "1907RL"
 cal.group <- "SWFSC"
 
-tmp <- cal_extract(filename, vessel.name, survey.name, cal.group = "SWFSC ")
+tmp <- extract_cal(filename, vessel.name, survey.name, cal.group = "SWFSC ")
 
 
 cal.files <- fs::dir_ls("data")

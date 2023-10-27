@@ -29,14 +29,14 @@ conv.df <- data.frame(
   mutate(L.in = 20) %>%
   mutate(
     # From TL
-    TL2SL = convert_length(scientificName, L.in, "TL", "SL"),
-    TL2FL = convert_length(scientificName, L.in, "TL", "FL"),
+    TL2SL = atm::convert_length(scientificName, L.in, "TL", "SL"),
+    TL2FL = atm::convert_length(scientificName, L.in, "TL", "FL"),
     # From SL
-    SL2TL = convert_length(scientificName, L.in, "SL", "TL"),
-    SL2FL = convert_length(scientificName, L.in, "SL", "FL"),
+    SL2TL = atm::convert_length(scientificName, L.in, "SL", "TL"),
+    SL2FL = atm::convert_length(scientificName, L.in, "SL", "FL"),
     # From FL
-    FL2TL = convert_length(scientificName, L.in, "FL", "TL"),
-    FL2SL = convert_length(scientificName, L.in, "FL", "SL")
+    FL2TL = atm::convert_length(scientificName, L.in, "FL", "TL"),
+    FL2SL = atm::convert_length(scientificName, L.in, "FL", "SL")
   )
 
 # Print results

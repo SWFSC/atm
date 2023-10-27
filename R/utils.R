@@ -219,3 +219,35 @@ extract_gps <- function(df, lat = df$lat, long = df$long, date_time = df$datetim
     select(GPS_date, GPS_time, latitude = lat, longitude = long)
   return(df)
 }
+
+#' Convert latitude or longitude from SCS format to decimal degrees
+#'
+#' @param x Latitude or longitude in SCS format.
+#' @return Latitude or longitude in decimal degrees.
+#' @export
+scs2dd <- function (x) {
+  if (length(grep("N", x)) > 0) {
+    # Remove all non-numeric or decimal characters
+    x <- gsub("[^0-9.]", "", x)
+    # Parse the remaining characters to extract the latitude
+    y <- as.numeric(substr(x, 1, 2)) + signif(as.numeric(substr(x, 3, 9))/60, digits = 6)
+  }
+  else {
+    # Remove all non-numeric or decimal characters
+    x <- gsub("[^0-9.]", "", x)
+    # Parse the remaining characters to extract the longitude
+    y <- -(as.numeric(substr(x, 1, 3)) + signif(as.numeric(substr(x, 4, 10))/60, digits = 6))
+  }
+  return(y)
+}
+
+#' Convert date and time from SCS format to POSIXct
+#'
+#' @param date Date in SCS format.
+#' @param time Time in SCS format.
+#' @return A date/time object in POSIXct format.
+#' @export
+scs2posix <- function(date, time) {
+  x <- as.POSIXct(paste(date, time), tz = "GMT", format = "%m/%d/%Y %H:%M:%S")
+  return(x)
+}
