@@ -5,7 +5,7 @@ library(tidyverse)
 load(here::here("data/basemap.Rdata"))
 
 # Create map
-get_basemap(nav, states, countries, landmarks, bathy, crs = 3310)
+atm::get_basemap(nav, states, countries, landmarks, bathy, crs = 3310)
 
 # Wrangle data -----------------------------------
 # library(rnaturalearth)
