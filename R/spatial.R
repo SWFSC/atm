@@ -164,3 +164,21 @@ project_df <- function(df, from = 4326, to) {
   return(df)
 }
 
+#' Calculate map boundaries from lat/lon input.
+#'
+#' @param lat Latitude in decimal degrees.
+#' @param lon Longitude in decimal degrees.
+#' @param pad Percentage that map boundaries are extended beyond the input data.
+#' @return A data frame containing the range of \code{lat} and \code{lon}.
+#' @export
+map_bounds <- function(lat, lon, pad = 0.05) {
+  # Configure survey plan map
+  # Determine the lat/lon to add to the data range to achieve the desired frame
+  pad.x <- (range(lon)[2] - range(lon)[1]) * pad
+  pad.y <- (range(lat)[2] - range(lat)[1]) * pad
+  # set limits for desired frame
+  range.lat <- c(min(lat) - pad.x, max(lat) + pad.x)
+  range.lon <- c(min(lon) - pad.y, max(lon) + pad.y)
+  # Return data frame with lat/lon range
+  data.frame(range.lat, range.lon)
+}
