@@ -578,6 +578,14 @@ extract_cal_ecs <- function(filename) {
   # Read calibration file
   cal     <- readLines(filename)
 
+  # extract calibration environment
+  Temperature   <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*Temperature\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))[1]
+  Salinity      <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*Salinity\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))[1]
+  SoundSpeed    <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*SoundSpeed\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))[1]
+
   # extract calibration results
   Freq          <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '\\s+Frequency\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
@@ -597,7 +605,10 @@ extract_cal_ecs <- function(filename) {
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*TwoWayBeamAngle\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
 
   # create a tibble of calibration results
-  cal.res <- tibble::tibble(Freq,
+  cal.res <- tibble::tibble(Temperature,
+                            Salinity,
+                            SoundSpeed,
+                            Freq,
                             BW.athwt,
                             BW.along,
                             Offset.athwt,
@@ -607,7 +618,10 @@ extract_cal_ecs <- function(filename) {
                             EBA)
 
   # Define column names
-  names(cal.res) <- c("Frequency",
+  names(cal.res) <- c("Temperature",
+                      "Salinity",
+                      "SoundSpeed",
+                      "Frequency",
                       "Beamwidth_athwartship",
                       "Beamwidth_alongship",
                       "OffsetAngle_athwartship",
