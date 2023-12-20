@@ -476,24 +476,24 @@ extract_cps_nasc <- function(path.in, pattern.in, path.out = path.in,
     file.path(path.out,
               paste0(unlist(strsplit(acoustic.file.name, "[.]"))[1],
                      suffix.out))) %>%
-    arrange(NASC)
+    dplyr::arrange(NASC)
 
   # Create GPS status data frame; missing Lat/Lon (999) will plot red
   gps.status <- new.masked.file %>%
-    select(Dist_M, Lat_M, Lon_M) %>%
-    group_by(Dist_M) %>%
-    summarize(Lat_M = Lat_M[1],
+    dplyr::select(Dist_M, Lat_M, Lon_M) %>%
+    dplyr::group_by(Dist_M) %>%
+    dplyr::summarise(Lat_M = Lat_M[1],
               Lon_M = Lon_M[1]) %>%
-    mutate(gps.good = case_when(
+    dplyr::mutate(gps.good = case_when(
       is.na(Lat_M) | is.na(Lon_M) ~ FALSE,
       TRUE ~ TRUE)) %>%
-    arrange(Dist_M)
+    dplyr::arrange(Dist_M)
 
   ## Summarize file for plotting the seabed depth
   seabed.depth <- new.masked.file %>%
-    arrange(Dist_M) %>%
-    group_by(Dist_M) %>%
-    summarize(max.depth = -max(Depth_mean))
+    dplyr::arrange(Dist_M) %>%
+    dplyr::group_by(Dist_M) %>%
+    dplyr::summarise(max.depth = -max(Depth_mean))
 
   ## Plot results
   cps.nasc.bubble <- ggplot(new.masked.file) +
