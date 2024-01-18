@@ -7,6 +7,7 @@ Authors@R: c(person("Stierhoff", "Kevin", email = "Kevin.Stierhoff@noaa.gov",
              person("Zwolinski", "Juan", email = "Juan.Zwolinski@noaa.gov", 
               role = c("aut"), comment = c(ORCID = 0000-0002-8009-4910)))
 Description: A collection of functions used to analyze data from acoustic-trawl method (ATM) surveys.
+URL: https://github.com/SWFSC/FRD-AST-atm
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
