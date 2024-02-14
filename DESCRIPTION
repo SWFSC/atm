@@ -2,9 +2,9 @@ Package: atm
 Type: Package
 Title: Functions Used for the Analysis of Acoustic-Trawl Method (ATM) Survey Data
 Version: 0.5.1
-Authors@R: c(person("Kevin", "Stierhoff", email = "Kevin.Stierhoff@noaa.gov", 
+Authors@R: c(person(given = "Kevin", family = "Stierhoff", middle = "Lee", email = "Kevin.Stierhoff@noaa.gov", 
               role = c("aut", "cre"), comment = c(ORCID = 0000-0002-3058-0312)),
-             person("Juan", "Zwolinski", email = "Juan.Zwolinski@noaa.gov", 
+             person(given = "Juan", family = "Zwolinski", middle = "Pablo", email = "Juan.Zwolinski@noaa.gov", 
               role = c("aut"), comment = c(ORCID = 0000-0002-8009-4910)))
 Description: A collection of functions used to analyze data from acoustic-trawl method (ATM) surveys.
 URL: https://github.com/SWFSC/atm
@@ -12,7 +12,7 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     testthat,
     knitr,
