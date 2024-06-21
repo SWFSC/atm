@@ -1,44 +1,40 @@
-# # filename <- here::here("data/70kHz_FM.xml")
-# filename <- here::here("data/120kHz_FM.xml")
-# # filename <- here::here("data/120kHz_FM_25mm sphere.xml")
-# # filename <- here::here("data/200kHz_FM_25mm sphere_PartsCombined.xml")
-# vessel.name <- "Lasker"
-# cal.group <- "SWFSC"
-# #
-# library(patchwork)
-# library(tidyverse)
-# #
-# tmp <- extract_cal_fm(filename, vessel.name, survey.name = "Test")$cal.res
-#
-# p1 <- ggplot(tmp, aes(freq, gain)) +
-#   geom_line() +
-#   geom_point(shape = 21, fill = "white", size = 1) +
-#   ylab("Gain (dB)") + xlab("Frequency (kHz)") +
-#   theme_bw()
-#
-# p2 <- ggplot() +
-#   geom_line(data = tmp, aes(freq, ba.alon), colour = "cyan") +
-#   geom_line(data = tmp, aes(freq, ba.athw), colour = "magenta") +
-#   geom_point(data = tmp, aes(freq, ba.alon),
-#              shape = 21, fill = "white", colour = "cyan", size = 1) +
-#   geom_point(data = tmp, aes(freq, ba.athw),
-#              shape = 21, fill = "white", colour = "magenta", size = 1) +
-#   ylab("Beamwidth (deg)") + xlab("Frequency (kHz)") +
-#   theme_bw()
-#
-# p4 <- ggplot() +
-#   geom_line(data = tmp, aes(freq, oa.alon), colour = "cyan") +
-#   geom_line(data = tmp, aes(freq, oa.athw), colour = "magenta") +
-#   geom_point(data = tmp, aes(freq, oa.alon),
-#              shape = 21, fill = "white", colour = "cyan", size = 1) +
-#   geom_point(data = tmp, aes(freq, oa.athw),
-#              shape = 21, fill = "white", colour = "magenta", size = 1) +
-#   ylab("Beam offset (deg)") + xlab("Frequency (kHz)") +
-#   theme_bw()
-#
-# # library(patchwork)
-#
-#
-# p.all <- p1 / p2 / p4
-#
-# ggsave(p.all, filename = "tmp.png")
+#' Estimate mixed layer depth from CTD profile. This is a trial function that is not yet working. DO NOT USE!
+#'
+#' @param data Name of dataframe containing depth and temperature data
+#'
+#' @return A data frame containing vertically integrated backscatter data.
+#' @export
+estimate_thermocline <- function(data, depth, temperature) {
+  # Read CSV file
+  tmp <- data.table::fread(filename, sep = ",")
+}
+
+# Load CTD data
+ctd <- read.csv("data-raw/uctd-data.asc", header = TRUE, sep = "\t")
+
+# Parse out temperature and depth
+depth <- -ctd$DepSM
+temperature <- ctd$Tnc90C
+
+# Keep data below the surface layer
+temperature <- temperature[depth < -10]
+depth <- depth[depth < -10]
+
+# Keep data above deep layer
+temperature <- temperature[depth > -80]
+depth <- depth[depth > -80]
+
+# Fit data to equation and solve for coefficients using nonlinear least squares
+# Tu  = Temperature at top of thermocline
+# Tb  = Temperature at bottom of thermocline
+# D   = Depth of middle of the thermocline
+# W   = Width of the thermocline
+model <- nls(temperature ~ Tu + (Tb-Tu)/(1+exp((depth-D)/(2*W))),
+             start=list(Tu = 15, Tb = 9, D = -30, W = 10),
+             control=nls.control(maxiter=500, minFactor=1e-6, warnOnly = TRUE))
+# Plot data
+# plot(temperature, depth)
+# new.data <- data.frame(depth = seq(min(depth),max(depth),len = 100))
+# lines(predict(model, newdata = new.data), new.data$depth)
+# points(predict(model, newdata = data.frame(depth = coef(model)[3])), coef(model)[3], col = "red", pch = 21, cex = 1.5, bg = "red")
+# lines(c(coef(model)[3],coef(model)[3]), c(-40, -20))
