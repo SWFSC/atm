@@ -4,7 +4,7 @@
 \alias{extract_ctd_cast}
 \title{Extract cast data from CTD and UCTD casts.}
 \usage{
-extract_ctd_cast(cast.filename, type, skip = 79)
+extract_ctd_cast(cast.filename, type, skip = 79, min.Z = 2)
 }
 \arguments{
 \item{cast.filename}{Name of cast file.}
@@ -12,6 +12,8 @@ extract_ctd_cast(cast.filename, type, skip = 79)
 \item{type}{Cast type (CTD or UCTD).}
 
 \item{skip}{Number of lines to skip (default = 79 for Valeport files)}
+
+\item{min.Z}{Minimum depth (Z, m) for identifying downcast data (default = 2)}
 }
 \value{
 A data frame containing cast data.

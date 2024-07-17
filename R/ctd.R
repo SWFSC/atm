@@ -88,9 +88,10 @@ extract_ctd_header <- function(header.filename, type) {
 #' @param cast.filename Name of cast file.
 #' @param type Cast type (CTD or UCTD).
 #' @param skip Number of lines to skip (default = 79 for Valeport files)
+#' @param min.Z Minimum depth (Z, m) for identifying downcast data (default = 2)
 #' @return A data frame containing cast data.
 #' @export
-extract_ctd_cast <- function(cast.filename, type, skip = 79) {
+extract_ctd_cast <- function(cast.filename, type, skip = 79, min.Z = 2) {
 
   # Extract cast name from file path
   if(stringr::str_detect(cast.filename, ".asc")) {
@@ -130,6 +131,8 @@ extract_ctd_cast <- function(cast.filename, type, skip = 79) {
       # Read cast data and rename columns
       read.table(cast.filename, skip = skip,
                  col.names = c("date","time","Z","P","T","C","S","Sv","Dens","ChlA","Ticks")) %>%
+        # Include only downcast data
+        dplyr::slice(which(Z > min.Z)[1]:which.max(Z)) %>%
         dplyr::mutate(
           scan = seq_along(date),
           t    = lubridate::ymd_hms(paste(date, time)),
@@ -142,9 +145,7 @@ extract_ctd_cast <- function(cast.filename, type, skip = 79) {
           dZt  = dplyr::na_if(dZt, Inf),
           Z    = -Z,
           cast = cast,
-          path = cast.filename) %>%
-        # Include only downcast data
-        dplyr::slice(which(Z < -2)[1]:which.min(Z))
+          path = cast.filename)
     }
 
   } else if (type == "CTD") {
