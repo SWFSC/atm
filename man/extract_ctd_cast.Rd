@@ -4,12 +4,14 @@
 \alias{extract_ctd_cast}
 \title{Extract cast data from CTD and UCTD casts.}
 \usage{
-extract_ctd_cast(cast.filename, type)
+extract_ctd_cast(cast.filename, type, skip = 79)
 }
 \arguments{
 \item{cast.filename}{Name of cast file.}
 
 \item{type}{Cast type (CTD or UCTD).}
+
+\item{skip}{Number of lines to skip (default = 79 for Valeport files)}
 }
 \value{
 A data frame containing cast data.
