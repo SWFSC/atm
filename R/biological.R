@@ -66,6 +66,13 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
         } else if (j == "OLS") {
           df$weightg <- exp(-13.156 + 0.044)*df$totalLength_mm^3.256
         }
+      } else if (i == "Merluccius productus") {
+        # From Alvarez-Trasvina et al 2022 Acta Ichthyologia et Piscatoria
+        if (j == "GLM") {
+          df$weightg <- 3e-06*df$totalLength_mm^3.11
+        } else if (j == "OLS") {
+          df$weightg <- 3e-06*df$totalLength_mm^3.11
+        }
       } else {
         df$weightg <- NA_real_
       }
