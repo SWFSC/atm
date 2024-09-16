@@ -557,15 +557,16 @@ extract_cal_fm <- function(filename, vessel.name = NA_character_, survey.name = 
 
   }
 
-  # create a data frame for calibration results
-  # create a cal_results.txt table, to hold summary data about transducer calibrations from cal/LOBE files
+  # create a tibble for calibration results
   cal.res <- tibble::tibble(freq = txdr.freq, gain = bm.txdr.gain,
                             sa.corr = bm.sa.corr, ba.athw = bm.athw.ba,
                             ba.alon = bm.alon.ba, oa.athw = bm.athw.oa,
                             oa.alon = bm.alon.oa)
 
+  cal.info <- tibble::tibble(txdr.type = txdr.type, txdr.sn = txdr.sn)
+
   # Return calibration information as a list of tibbles
-  list(cal.res = cal.res)
+  list(cal.res = cal.res, cal.info = cal.info)
 }
 
 #' Extract calibration results from Echoview calibration supplement (.ecs) files.
