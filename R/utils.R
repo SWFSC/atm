@@ -10,7 +10,7 @@ extract_csv <- function(filename) {
 
   # Extract transect name from the file name
   # New method using regex, to better handle variations in filenames
-  tranect <- stringr::str_extract(filename, pattern = "\\d{3}(-\\d+)?\\b")
+  transect <- stringr::str_extract(filename, pattern = "\\d{3}(-\\d+)?\\b")
 
   # Original method, which failed when names weren't properly separated by underscores
   # transect <- tail(unlist(stringr::str_split(filename, "/")), n = 1) %>%
