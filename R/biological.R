@@ -60,11 +60,11 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
           df$weightg <- exp(-12.149 + 0.044 + (i_s*0.072))*df$totalLength_mm^3.076
         }
       } else if (i == "Etrumeus acuminatus") {
-        # For round herring, use P. herring
+        # For round herring, model fit to 2024 data by J. Zwolinski
         if (j == "GLM") {
-          df$weightg <- exp(-13.140)*df$totalLength_mm^3.253
+          df$weightg <- exp(-13.36408)*df$totalLength_mm^3.327691
         } else if (j == "OLS") {
-          df$weightg <- exp(-13.156 + 0.044)*df$totalLength_mm^3.256
+          df$weightg <- exp(-13.36408)*df$totalLength_mm^3.327691
         }
       } else if (i == "Merluccius productus") {
         # From Alvarez-Trasvina et al 2022 Acta Ichthyologia et Piscatoria
