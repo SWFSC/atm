@@ -2,6 +2,8 @@
 # Juan Zwolinski and Kevin Stierhoff
 # 27 March 2025
 
+devtools::install_github("SWFSC/atm")
+
 library(atm)
 
 # Simulated data, 3 trawls, 2 transects
