@@ -4,10 +4,14 @@
 \alias{extract_tv80}
 \title{Extract measurements from Simrad TV80 measurement file}
 \usage{
-extract_tv80(file)
+extract_tv80(file, col.names = TRUE, skip.rows = 0)
 }
 \arguments{
 \item{file}{The file path, optimally derived using fs::dir_ls().}
+
+\item{col.names}{\code{TRUE}, if column names are present. A charactor vector containing column names if not.}
+
+\item{skip.rows}{Number of rows to skip. 0 if col.name = \code{TRUE}, 1 if col.names is a character vector.}
 }
 \value{
 A data frame with data from the PX sensors, Trawl Eye sensor, and trawl vessel.
