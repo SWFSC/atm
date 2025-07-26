@@ -9,9 +9,17 @@ extract_csv <- function(filename) {
   tmp <- data.table::fread(filename, sep = ",")
 
   # Extract transect name from the file name
-  transect <- tail(unlist(stringr::str_split(filename, "/")), n = 1) %>%
-    stringr::str_split("_") %>%
-    purrr::pluck(1, 2)
+  # New method using regex, to better handle variations in file names
+  transect <- stringr::str_extract(filename, pattern = "_\\d{3}[\\w\\d\\W]([\\d]{1})?") %>%
+    # Replace leading underscore
+    stringr::str_replace("_", "") %>%
+    # Replace trailing special characters
+    stringr::str_replace("[^a-zA-Z0-9]$", "")
+
+  # Original method, which failed when names weren't properly separated by underscores
+  # transect <- tail(unlist(stringr::str_split(filename, "/")), n = 1) %>%
+  #   stringr::str_split("_") %>%
+  #   purrr::pluck(1, 2)
 
   # Are data from CPS?
   is.cps <- ifelse(stringr::str_detect(filename, "CPS"), TRUE, FALSE)

@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+*.html
 *.png
 data/*
 inst/doc
