@@ -17,5 +17,5 @@ Format ggplot2 axis labels to fancy scientific.
 }
 \examples{
 p <- ggplot(mtcars, aes(wt, mpg))
-p + geom_point() + scale_y_continuous(labels = fancy_scientific)
+p + geom_point() + scale_y_continuous(labels = fancy_sci)
 }
