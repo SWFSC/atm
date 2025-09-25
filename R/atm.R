@@ -518,7 +518,8 @@ extract_cps_nasc <- function(path.in, pattern.in, path.out = path.in,
     geom_point(data = gps.status, aes(Dist_M, 5, colour = gps.good), size = 1) +
     # Configure axes and scales
     scale_x_continuous(position = "top", breaks = seq(0, max(new.masked.file$Dist_M), dist.bin), expand = c(0,0)) +
-    scale_y_continuous(breaks = -rev(seq(0, signif(max(new.masked.file$Depth_mean), 1), 50))) +
+    scale_y_continuous(limits = -rev(c(0, max.range)), breaks = -rev(seq(0, max.range, 50))) +
+    # scale_y_continuous(breaks = -rev(seq(0, signif(max(new.masked.file$Depth_mean), 1), 50))) +
     scale_size_area(breaks = c(0,100,1000,10000,50000,100000,1000000),
                     guide = guide_legend(reverse = TRUE)) +
     scale_fill_viridis_c(option = "plasma") +
