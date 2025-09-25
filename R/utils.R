@@ -153,7 +153,7 @@ extract_csv <- function(filename) {
 #' @return A text string as an expression.
 #' @examples
 #' p <- ggplot(mtcars, aes(wt, mpg))
-#' p + geom_point() + scale_y_continuous(labels = fancy_scientific)
+#' p + geom_point() + scale_y_continuous(labels = fancy_sci)
 #' @export
 fancy_sci <- function(l) {
   # turn in to character string in scientific notation
