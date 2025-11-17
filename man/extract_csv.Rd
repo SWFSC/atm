@@ -4,10 +4,12 @@
 \alias{extract_csv}
 \title{Extract vertically integrated backscatter from CSV files}
 \usage{
-extract_csv(filename)
+extract_csv(filename, Sv.max = NULL)
 }
 \arguments{
 \item{filename}{Name or path to CSV file exported from Echoview.}
+
+\item{Sv.max}{Maximum Sv value for cell filtering.}
 }
 \value{
 A data frame containing vertically integrated backscatter data.

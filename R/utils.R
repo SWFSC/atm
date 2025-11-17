@@ -1,10 +1,11 @@
 #' Extract vertically integrated backscatter from CSV files
 #'
 #' @param filename Name or path to CSV file exported from Echoview.
+#' @param Sv.max Maximum Sv value for cell filtering.
 #'
 #' @return A data frame containing vertically integrated backscatter data.
 #' @export
-extract_csv <- function(filename) {
+extract_csv <- function(filename, Sv.max = NULL) {
   # Read CSV file
   tmp <- data.table::fread(filename, sep = ",")
 
@@ -16,13 +17,13 @@ extract_csv <- function(filename) {
     # Replace trailing special characters
     stringr::str_replace("[^a-zA-Z0-9]$", "")
 
-  # Original method, which failed when names weren't properly separated by underscores
-  # transect <- tail(unlist(stringr::str_split(filename, "/")), n = 1) %>%
-  #   stringr::str_split("_") %>%
-  #   purrr::pluck(1, 2)
-
   # Are data from CPS?
   is.cps <- ifelse(stringr::str_detect(filename, "CPS"), TRUE, FALSE)
+
+  if (!is.null(Sv.max)) {
+    # Remove cells where Sv_max > Sv.max
+    tmp <- dplyr::filter(tmp, Sv_max < Sv.max)
+  }
 
   # Summarize NASC by interval
   if ("cps.NASC" %in% colnames(tmp)) {
@@ -34,6 +35,7 @@ extract_csv <- function(filename) {
         date     = Date_M[1],
         time     = as.character(Time_M[1]),
         dist_m   = Dist_M[1],
+        Sv_max   = max(Sv_max),
         NASC.5   = sum(NASC[Layer_depth_max <=   5]),
         NASC.10  = sum(NASC[Layer_depth_max <=  10]),
         NASC.15  = sum(NASC[Layer_depth_max <=  15]),
@@ -74,6 +76,7 @@ extract_csv <- function(filename) {
         date     = Date_M[1],
         time     = as.character(Time_M[1]),
         dist_m   = Dist_M[1],
+        Sv_max   = max(Sv_max),
         NASC.5   = sum(NASC[Layer_depth_max <=   5]),
         NASC.10  = sum(NASC[Layer_depth_max <=  10]),
         NASC.15  = sum(NASC[Layer_depth_max <=  15]),
@@ -114,6 +117,7 @@ extract_csv <- function(filename) {
         date     = Date_M[1],
         time     = as.character(Time_M[1]),
         dist_m   = Dist_M[1],
+        Sv_max   = max(Sv_max),
         NASC.5   = sum(NASC[Layer_depth_max <=   5]),
         NASC.10  = sum(NASC[Layer_depth_max <=  10]),
         NASC.15  = sum(NASC[Layer_depth_max <=  15]),
