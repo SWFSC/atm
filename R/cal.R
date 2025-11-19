@@ -604,6 +604,8 @@ extract_cal_ecs <- function(filename) {
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*TransducerGain\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
   EBA           <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*TwoWayBeamAngle\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
+  RMS           <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*RMSError\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
 
   # create a tibble of calibration results
   cal.res <- tibble::tibble(Temperature,
@@ -616,7 +618,8 @@ extract_cal_ecs <- function(filename) {
                             Offset.along,
                             Sa.corr,
                             Gain,
-                            EBA)
+                            EBA,
+                            RMS)
 
   # Define column names
   names(cal.res) <- c("Temperature",
@@ -629,7 +632,8 @@ extract_cal_ecs <- function(filename) {
                       "OffsetAngle_alongship",
                       "Sa_correction",
                       "Gain",
-                      "TwoWayBeamAngle")
+                      "TwoWayBeamAngle",
+                      "RMS")
 
   # Return the cal.res variable
   return(cal.res)
