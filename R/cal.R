@@ -579,17 +579,33 @@ extract_cal_ecs <- function(filename) {
   # Read calibration file
   cal     <- readLines(filename)
 
-  # extract calibration environment
+  # Extract transducer information
+  Frequency           <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '\\s+Frequency\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
+  TxducerModel        <- stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '\\s+TxducerModel\\s*=\\s*\\S+')),"\\w+\\d+(-*\\d*[A-Za-z]*)?")
+  TxducerSerialNumber <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '\\s+TxducerSerialNumber\\s*=\\s*\\S+')),"\\b\\d{1,5}\\b"))
+
+  # Extract transceiver settings
+  TransmitPower       <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '\\s+TransmitPower\\s*=\\s*\\S+')),"\\b\\d{1,5}\\b"))
+  PulseDuration       <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '\\s+PulseDuration\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}")) * 1000
+
+  # Extract calibration environment
   Temperature   <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*Temperature\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))[1]
   Salinity      <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*Salinity\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))[1]
   SoundSpeed    <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*SoundSpeed\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))[1]
+  SphereTS      <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*SphereTS\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
+  NoiseEstimate <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*NoiseEstimate\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
 
-  # extract calibration results
-  Freq          <- as.numeric(stringr::str_extract(unlist(
-    stringr::str_extract_all(cal, pattern = '\\s+Frequency\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
+  # Extract calibration results
   BW.athwt      <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*MajorAxis3dbBeamAngle\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
   BW.along      <- as.numeric(stringr::str_extract(unlist(
@@ -608,10 +624,16 @@ extract_cal_ecs <- function(filename) {
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*RMSError\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
 
   # create a tibble of calibration results
-  cal.res <- tibble::tibble(Temperature,
+  cal.res <- tibble::tibble(Frequency,
+                            TxducerModel,
+                            TxducerSerialNumber,
+                            TransmitPower,
+                            PulseDuration,
+                            Temperature,
                             Salinity,
                             SoundSpeed,
-                            Freq,
+                            SphereTS,
+                            NoiseEstimate,
                             BW.athwt,
                             BW.along,
                             Offset.athwt,
@@ -622,10 +644,16 @@ extract_cal_ecs <- function(filename) {
                             RMS)
 
   # Define column names
-  names(cal.res) <- c("Temperature",
+  names(cal.res) <- c("Frequency",
+                      "TxducerModel",
+                      "TxducerSerialNumber",
+                      "TransmitPower",
+                      "PulseDuration",
+                      "Temperature",
                       "Salinity",
                       "SoundSpeed",
-                      "Frequency",
+                      "SphereTS",
+                      "NoiseEstimate",
                       "Beamwidth_athwartship",
                       "Beamwidth_alongship",
                       "OffsetAngle_athwartship",
