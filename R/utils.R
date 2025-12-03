@@ -25,6 +25,11 @@ extract_csv <- function(filename, Sv.max = NULL) {
     tmp <- dplyr::filter(tmp, Sv_max < Sv.max)
   }
 
+  # Create Sv_max variable if missing
+  if (!"Sv_max" %in% colnames(tmp)) {
+    tmp$Sv_max <- NA_real_
+  }
+
   # Summarize NASC by interval
   if ("cps.NASC" %in% colnames(tmp)) {
     tmp %>%
