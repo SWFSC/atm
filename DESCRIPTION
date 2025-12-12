@@ -35,5 +35,6 @@ Imports:
     ggspatial,
     data.table,
     magick,
-    patchwork
+    patchwork,
+    shadowtext
 VignetteBuilder: knitr
