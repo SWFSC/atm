@@ -41,7 +41,7 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
         } else if (j == "OLS") {
           df$weightg <- exp(-13.043 + 0.071 + (i_s*0.086))*df$totalLength_mm^3.206
         }
-      } else if (i == "Sardinops sagax") {
+      } else if (i == "Sardinops sagax" | i == "Sardinops melanosticta") {
         if (j == "GLM") {
           df$weightg <- exp(-12.475 + (i_s*0.174))*df$totalLength_mm^3.121
         } else if (j == "OLS") {
@@ -126,7 +126,7 @@ estimate_length <- function(scientificName, weightg, model.type = "GLM", season)
         } else if (j == "OLS") {
           df$totalLength_mm <- (df$weightg/exp(-13.043 + 0.071 + (i_s*0.086)))^(1/3.206)
         }
-      } else if (i == "Sardinops sagax") {
+      } else if (i == "Sardinops sagax" | i == "Sardinops melanosticta") {
         if (j == "GLM") {
           df$totalLength_mm <- (df$weightg/exp(-12.475 + (i_s*0.174)))^(1/3.121)
         } else if (j == "OLS") {
@@ -244,7 +244,7 @@ convert_length <- function(scientificName, L.in, from, to) {
               df$L.out <- NA_real_
             }
           }
-        } else if (i == "Sardinops sagax") {
+        } else if (i == "Sardinops sagax" | i == "Sardinops melanosticta") {
           # Convert from TL
           if (j == "TL") {
             if (k == "SL") {
