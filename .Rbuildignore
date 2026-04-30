@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^R/dev\.R$
+^\.positai$
+^\.claude$
