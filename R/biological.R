@@ -348,3 +348,23 @@ convert_length <- function(scientificName, L.in, from, to) {
   # Return weight estimate
   dplyr::arrange(df.out, id) %>% dplyr::pull(L.out)
 }
+
+#' Estimate Pacific sardine age
+#'
+#' @description Estimates the age of Pacific sardine (Sardinops sagax) from their standard length (SL, mm)
+#' @param standardLength_mm A vector containing the species' standard length (mm).
+#' @return A vector of age groups for age-0 (0) and age-1+ (1).
+#' @export
+#' @examples
+#' calculate_age(standardLength_mm, 150)
+
+calculate_age <- function(standardLength_mm){
+  # Compute the probability of being age 1
+  prob.age1 <- 1/(1 + exp(-1*(-22.488896 + standardLength_mm*0.168123)))
+
+  # Assign the age class
+  age <- rbinom(n = length(prob.age1), size = 1, prob = prob.age1)
+
+  # Return age vector
+  return(age)
+}
