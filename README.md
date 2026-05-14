@@ -10,8 +10,8 @@ The {atm} package contains functions used by the [Advanced Survey Technologies (
 You can install or update {atm} from [GitHub](https://github.com/SWFSC/atm) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("SWFSC/atm")
+# install.packages("pak")
+pak::pak("SWFSC/atm")
 ```
 
 ## Maintainer
