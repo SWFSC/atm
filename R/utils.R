@@ -143,13 +143,18 @@ fancy_sci <- function(l) {
 
 #' Identify NaN values in a data frame.
 #'
-#' @param df A data frame containing NaN values.
+#' @param df A data frame that may contain NaN values.
 #' @return The indices of NaN elements in a data frame.
 #' @examples
-#' is.nan.df(df)
+#' isNaNdf(df)
 #' @export
-is.nan.df <- function(df)
-  do.call(cbind, lapply(df, is.nan))
+isNaNdf <- function(df) {
+  # sapply applies the is.nan function to each column
+  sapply(df, is.nan)
+
+  # Original method
+  # do.call(cbind, lapply(df, is.nan))
+}
 
 #' Extract nodes from XML file.
 #'
