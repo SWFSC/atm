@@ -359,6 +359,9 @@ convert_length <- function(scientificName, L.in, from, to) {
 #' calculate_age(standardLength_mm, 150)
 
 calculate_age <- function(standardLength_mm){
+  # Set seed for random number
+  set.seed(1)
+
   # Compute the probability of being age 1
   prob.age1 <- 1/(1 + exp(-1*(-22.488896 + standardLength_mm*0.168123)))
 
