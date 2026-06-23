@@ -4,16 +4,18 @@
 \alias{extract_ctd_cast}
 \title{Extract cast data from CTD and UCTD casts.}
 \usage{
-extract_ctd_cast(cast.filename, type, skip = 79, min.Z = 2)
+extract_ctd_cast(cast.filename, type, skip = NULL, min.Z = 2, col.names = NULL)
 }
 \arguments{
 \item{cast.filename}{Name of cast file.}
 
 \item{type}{Cast type (CTD or UCTD).}
 
-\item{skip}{Number of lines to skip (default = 79 for Valeport files)}
+\item{skip}{Number of lines to skip (default = 79 for vp2 files and 62 for m1 files). Else, may be defined in the survey-specific settings file.}
 
 \item{min.Z}{Minimum depth (Z, m) for identifying downcast data (default = 2)}
+
+\item{col.names}{Vector containing column names. May be defined in the survey-specific settings file.}
 }
 \value{
 A data frame containing cast data.
