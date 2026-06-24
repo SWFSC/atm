@@ -4,7 +4,7 @@
 \alias{map_bounds}
 \title{Calculate map boundaries from lat/lon input.}
 \usage{
-map_bounds(lat, lon, pad = 0.05)
+map_bounds(lat, lon, pad = 0.05, na.rm = TRUE)
 }
 \arguments{
 \item{lat}{Latitude in decimal degrees.}

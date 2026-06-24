@@ -171,14 +171,14 @@ project_df <- function(df, from = 4326, to) {
 #' @param pad Percentage that map boundaries are extended beyond the input data.
 #' @return A data frame containing the range of \code{lat} and \code{lon}.
 #' @export
-map_bounds <- function(lat, lon, pad = 0.05) {
+map_bounds <- function(lat, lon, pad = 0.05, na.rm = TRUE) {
   # Configure survey plan map
   # Determine the lat/lon to add to the data range to achieve the desired frame
-  pad.x <- (range(lon)[2] - range(lon)[1]) * pad
-  pad.y <- (range(lat)[2] - range(lat)[1]) * pad
+  pad.x <- (range(lon, na.rm = na.rm)[2] - range(lon, na.rm = na.rm)[1]) * pad
+  pad.y <- (range(lat, na.rm = na.rm)[2] - range(lat, na.rm = na.rm)[1]) * pad
   # set limits for desired frame
-  range.lat <- c(min(lat) - pad.x, max(lat) + pad.x)
-  range.lon <- c(min(lon) - pad.y, max(lon) + pad.y)
+  range.lat <- c(min(lat, na.rm = na.rm) - pad.x, max(lat, na.rm = na.rm) + pad.x)
+  range.lon <- c(min(lon, na.rm = na.rm) - pad.y, max(lon, na.rm = na.rm) + pad.y)
   # Return data frame with lat/lon range
   data.frame(range.lat, range.lon)
 }
