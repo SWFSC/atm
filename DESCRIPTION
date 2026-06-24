@@ -31,7 +31,8 @@ Imports:
     data.table,
     magick,
     patchwork,
-    shadowtext
+    shadowtext,
+    gsw
 VignetteBuilder: knitr
 Authors@R: c(
     person("Kevin", "Stierhoff", , "kevin.stierhoff@noaa.gov", role = c("aut", "cre"),
