@@ -505,7 +505,7 @@ mvp_export_template_ecs <- function(raw_descent_df, binned_df, cast_id, output_d
       }
 
       # EBA Compensation
-      pattern <- paste0("(?s)SourceCal T", j, "*?TwoWayBeamAngle\\s*=\\s*(\\d*\\.*\\d*)")
+      pattern <- paste0("(?s)SourceCal T", j, ".*?TwoWayBeamAngle\\s*=\\s*(\\d*\\.*\\d*)")
       temp <- regexec(pattern, ECS_new, perl = TRUE)
       if (temp[[1]][1] != -1) {
         ECS_new <- paste0(stringr::str_sub(ECS_new, 1, temp[[1]][2]-1),
