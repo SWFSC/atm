@@ -69,9 +69,9 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
       } else if (i == "Allosmerus elongatus") {
         # Using the standard fisheries Bayesian length-weight regression equation
         if (j == "GLM") {
-          df$weightg <- 0.00363*df$totalLength_mm^3.17
+          df$weightg <- 3.63e-06*df$totalLength_mm^3.17
         } else if (j == "OLS") {
-          df$weightg <- 0.00363*df$totalLength_mm^3.17
+          df$weightg <- 3.63e-06*df$totalLength_mm^3.17
         }
       }else if (i == "Merluccius productus") {
         # From Alvarez-Trasvina et al 2022 Acta Ichthyologia et Piscatoria
