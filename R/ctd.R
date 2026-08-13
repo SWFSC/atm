@@ -476,10 +476,10 @@ mvp_export_template_ecs <- function(raw_descent_df, binned_df, cast_id, output_d
 
   # 3. Extract nominal parameters from template to serve as baseline
   c_0 <- as.numeric(stringr::str_match(ECS, "\\bSoundSpeed\\s*=\\s*([^\\s]+)")[,2])
-  g_0 <- as.numeric(stringr::str_match_all(ECS, "\\bTransducerGain\\s*=\\s*(-?\\d*\\.?\\d+)")[[1]][,2])
+  g_0 <- as.numeric(stringr::str_match_all(ECS, "\\bTransducerGain\\s*=\\s*(\\d*\\.?\\d+)")[[1]][,2])
   EBA_0 <- as.numeric(stringr::str_match_all(ECS, "\\bTwoWayBeamAngle\\s*=\\s*(-?\\d*\\.?\\d+)")[[1]][,2])
-  BW_minor_0 <- as.numeric(stringr::str_match_all(ECS, "\\bMinorAxis3dbBeamAngle\\s*=\\s*(-?\\d*\\.?\\d+)")[[1]][,2])
-  BW_major_0 <- as.numeric(stringr::str_match_all(ECS, "\\bMajorAxis3dbBeamAngle\\s*=\\s*(-?\\d*\\.?\\d+)")[[1]][,2])
+  BW_minor_0 <- as.numeric(stringr::str_match_all(ECS, "\\bMinorAxis3dbBeamAngle\\s*=\\s*(\\d*\\.?\\d+)")[[1]][,2])
+  BW_major_0 <- as.numeric(stringr::str_match_all(ECS, "\\bMajorAxis3dbBeamAngle\\s*=\\s*(\\d*\\.?\\d+)")[[1]][,2])
 
   # 4. Find Transducer Sound Speed for Parameter Compensation
   idx <- which.min(abs(raw_descent_df$Depth - tx_depth))
@@ -505,7 +505,7 @@ mvp_export_template_ecs <- function(raw_descent_df, binned_df, cast_id, output_d
       }
 
       # EBA Compensation
-      pattern <- paste0("(?s)SourceCal T", j, ".*?TwoWayBeamAngle\\s*=\\s*(\\d*\\.*\\d*)")
+      pattern <- paste0("(?s)SourceCal T", j, ".*?TwoWayBeamAngle\\s*=\\s*(-?\\d*\\.*\\d*)")
       temp <- regexec(pattern, ECS_new, perl = TRUE)
       if (temp[[1]][1] != -1) {
         ECS_new <- paste0(stringr::str_sub(ECS_new, 1, temp[[1]][2]-1),
