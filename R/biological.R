@@ -66,7 +66,14 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
         } else if (j == "OLS") {
           df$weightg <- exp(-13.36408)*df$totalLength_mm^3.327691
         }
-      } else if (i == "Merluccius productus") {
+      } else if (i == "Allosmerus elongatus") {
+        # Using the standard fisheries Bayesian length-weight regression equation
+        if (j == "GLM") {
+          df$weightg <- 0.00363*df$totalLength_mm^3.17
+        } else if (j == "OLS") {
+          df$weightg <- 0.00363*df$totalLength_mm^3.17
+        }
+      }else if (i == "Merluccius productus") {
         # From Alvarez-Trasvina et al 2022 Acta Ichthyologia et Piscatoria
         if (j == "GLM") {
           df$weightg <- 3e-06*df$totalLength_mm^3.11
@@ -333,6 +340,33 @@ convert_length <- function(scientificName, L.in, from, to) {
           } else if (j == "FL") {
             if (k == "TL") {
               df$L.out <- 1.110*df$L.in - 0.323
+            } else if (k == "SL") {
+              df$L.out <- NA_real_
+            }
+          }
+        } else if (i == "Allosmerus elongatus") {
+          # For SL values, use Osmerus mordax
+          # https://fishbase.org/popdyn/LLRelationshipList.php?ID=253&GenusName=Osmerus&SpeciesName=mordax&fc=80
+          # Convert from TL
+          if (j == "TL") {
+            if (k == "SL") {
+              df$L.out <- df$L.in/1.165
+            } else if (k == "FL") {
+              df$L.out <- df$L.in*0.818
+            } else {
+              df$L.out <- NA_real_
+            }
+            # Convert from SL
+          } else if (j == "SL") {
+            if (k == "TL") {
+              df$L.out <- df$L.in*1.165
+            } else {
+              df$L.out <- NA_real_
+            }
+            # Convert from FL
+          } else if (j == "FL") {
+            if (k == "TL") {
+              df$L.out <- df$L.in/0.818
             } else if (k == "SL") {
               df$L.out <- NA_real_
             }
