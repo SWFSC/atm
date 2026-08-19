@@ -69,9 +69,11 @@ estimate_weight <- function(scientificName, totalLength_mm, model.type = "GLM", 
       } else if (i == "Allosmerus elongatus") {
         # Using the standard fisheries Bayesian length-weight regression equation
         if (j == "GLM") {
-          df$weightg <- 3.63e-06*df$totalLength_mm^3.17
+          # From JPZ, 19 August 2026
+          # The total length (estimated from FL) to weight relationship in kg is Weight = exp(-20.27707)*TL(mm)^3.245997
+          df$weightg <- (exp(-20.27707)*df$totalLength_mm^3.245997)*1000
         } else if (j == "OLS") {
-          df$weightg <- 3.63e-06*df$totalLength_mm^3.17
+          df$weightg <- (exp(-20.27707)*df$totalLength_mm^3.245997)*1000
         }
       }else if (i == "Merluccius productus") {
         # From Alvarez-Trasvina et al 2022 Acta Ichthyologia et Piscatoria
@@ -157,6 +159,13 @@ estimate_length <- function(scientificName, weightg, model.type = "GLM", season)
           df$totalLength_mm <- (df$weightg/exp(-13.140))^(1/3.253)
         } else if (j == "OLS") {
           df$totalLength_mm <- (df$weightg/exp(-13.156+0.044))^(1/3.256)
+        }
+      } else if (i == "Allosmerus elongatus") {
+        # For whitebait smelt, use the allometric L/W relationship from Harvey et al.
+        if (j == "GLM") {
+          df$totalLength_mm <- (df$weightg/0.0063)^(1/3.233)*11.12
+        } else if (j == "OLS") {
+          df$totalLength_mm <- (df$weightg/0.0063)^(1/3.233)*11.12
         }
       } else {
         df$totalLength_mm <- NA_real_
@@ -345,29 +354,34 @@ convert_length <- function(scientificName, L.in, from, to) {
             }
           }
         } else if (i == "Allosmerus elongatus") {
-          # For SL values, use Osmerus mordax
-          # https://fishbase.org/popdyn/LLRelationshipList.php?ID=253&GenusName=Osmerus&SpeciesName=mordax&fc=80
+          # Using a generic morphometric ratios for Osmeridae from FishBase
           # Convert from TL
           if (j == "TL") {
             if (k == "SL") {
-              df$L.out <- df$L.in/1.165
+              df$L.out <- df$L.in/1.12
             } else if (k == "FL") {
-              df$L.out <- df$L.in*0.818
+              df$L.out <- df$L.in/1.112
             } else {
               df$L.out <- NA_real_
             }
             # Convert from SL
           } else if (j == "SL") {
             if (k == "TL") {
-              df$L.out <- df$L.in*1.165
+              # The standard length to total length equation is  TL = 1.156059*SL; It has no intercept
+              df$L.out <- df$L.in*1.156059
+            } else if (k == "FL") {
+              df$L.out <- df$L.in/0.892
             } else {
               df$L.out <- NA_real_
             }
             # Convert from FL
           } else if (j == "FL") {
-            if (k == "TL") {
-              df$L.out <- df$L.in/0.818
-            } else if (k == "SL") {
+            if (k == "SL") {
+              df$L.out <- df$L.in*0.892
+            } else if (k == "TL") {
+              # TL (mm) =  11.440 + FL(mm)*0.987; JPZ, 19 August 2026
+              df$L.out <- 11.440 + df$L.in*0.987
+            } else {
               df$L.out <- NA_real_
             }
           }
