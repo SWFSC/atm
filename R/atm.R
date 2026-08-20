@@ -98,6 +98,19 @@ estimate_ts <- function(species, TL, units = "mm") {
       # AST L/W
       df$true.wg      <- exp(-10.997)*(df$TL)^2.757
     }
+    # If whitebait smelt
+    if (i == "Allosmerus elongatus")    {
+      # Assumes TS per individual equals to that of P. sardine but uses the species L to W
+      df$TS.wg        <- -15.38997*log10(df$TL) - 11.12777
+      df$sigma.wg     <- 10^(df$TS.wg/10) #
+      # dB individual^-1^
+      df$TS.ind       <- 17.07*log10(df$TL) - 66.73 # Same as sardine
+      df$sigma.ind    <- 10^(df$TS.ind/10)
+      # LW from Juan in 08/19/2026
+      df$estimated.wg <- exp(-12.802887)*(df$TL)^3.245997
+      # AST L/W
+      df$true.wg      <- exp(-12.802887)*(df$TL)^3.245997
+    }
     df.out <- dplyr::bind_rows(df.out, df)
   }
 
