@@ -312,7 +312,7 @@ convert_length <- function(scientificName, L.in, from, to) {
           # Convert from TL
           if (j == "TL") {
             if (k == "FL") {
-              df$L.out <- (df$L.in - 0.896)/1.110
+              df$L.out <- (df$L.in - 0.896)/1.100
             } else {
               df$L.out <- NA_real_
             }
@@ -322,7 +322,7 @@ convert_length <- function(scientificName, L.in, from, to) {
             # Convert from FL
           } else if (j == "FL") {
             if (k == "TL") {
-              df$L.out <- 1.110*df$L.in + 0.896
+              df$L.out <- 1.100*df$L.in + 0.896
             } else {
               df$L.out <- NA_real_
             }
