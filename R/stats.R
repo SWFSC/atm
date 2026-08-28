@@ -35,7 +35,20 @@ estimate_bootstrap <- function(nasc.df, clf.df,
 
   # Define species-specific parameters
 
-  if (species == "Clupea pallasii") {
+  if (species == "Allosmerus elongatus") {
+    # Create a length-based weight vector
+    # FL converted to TL from Zwolinski analysis of specimen data in 2026
+    # TL (estimated from FL) to weight relationship in kg is Weight = exp(-20.27707)*TL(mm)^3.245997
+    weight.vec <- (exp(-20.27707)*((11.440 + L.vec*10*0.987)/10)^3.245997)
+
+    nasc.df <- nasc.df %>%
+      dplyr::select(transect, cluster, cps.nasc, prop.smelt, sigmawg.smelt, sigmaindiv.smelt, meanwg.smelt) %>%
+      dplyr::rename(prop       = prop.smelt,
+                    sigmawg    = sigmawg.smelt,
+                    sigmaindiv = sigmaindiv.smelt,
+                    meanwg     = meanwg.smelt)
+
+  } else if (species == "Clupea pallasii") {
     # Create a length-based weight vector
     # FL converted to TL from Palance
     # TL converted to W from sardine
@@ -44,9 +57,9 @@ estimate_bootstrap <- function(nasc.df, clf.df,
     nasc.df <- nasc.df %>%
       dplyr::select(transect, cluster, cps.nasc, prop.her, sigmawg.her, sigmaindiv.her, meanwg.her) %>%
       dplyr::rename(prop       = prop.her,
-             sigmawg    = sigmawg.her,
-             sigmaindiv = sigmaindiv.her,
-             meanwg     = meanwg.her)
+                    sigmawg    = sigmawg.her,
+                    sigmaindiv = sigmaindiv.her,
+                    meanwg     = meanwg.her)
 
   } else if (species == "Etrumeus acuminatus") {
     # Create a length-based weight vector
@@ -72,9 +85,9 @@ estimate_bootstrap <- function(nasc.df, clf.df,
     nasc.df <- nasc.df %>%
       dplyr::select(transect, cluster, cps.nasc, prop.anch, sigmawg.anch, sigmaindiv.anch, meanwg.anch) %>%
       dplyr::rename(prop       = prop.anch,
-             sigmawg    = sigmawg.anch,
-             sigmaindiv = sigmaindiv.anch,
-             meanwg     = meanwg.anch)
+                    sigmawg    = sigmawg.anch,
+                    sigmaindiv = sigmaindiv.anch,
+                    meanwg     = meanwg.anch)
 
   } else if (species == "Sardinops sagax") {
     # Create a length-based weight vector
@@ -87,9 +100,9 @@ estimate_bootstrap <- function(nasc.df, clf.df,
     nasc.df <- nasc.df %>%
       dplyr::select(transect, cluster, cps.nasc, prop.sar, sigmawg.sar, sigmaindiv.sar, meanwg.sar) %>%
       dplyr::rename(prop       = prop.sar,
-             sigmawg    = sigmawg.sar,
-             sigmaindiv = sigmaindiv.sar,
-             meanwg     = meanwg.sar)
+                    sigmawg    = sigmawg.sar,
+                    sigmaindiv = sigmaindiv.sar,
+                    meanwg     = meanwg.sar)
 
   } else if (species == "Scomber japonicus") {
     # Create a length-based weight vector
@@ -102,9 +115,9 @@ estimate_bootstrap <- function(nasc.df, clf.df,
     nasc.df <- nasc.df %>%
       dplyr::select(transect, cluster, cps.nasc, prop.mack, sigmawg.mack, sigmaindiv.mack, meanwg.mack) %>%
       dplyr::rename(prop       = prop.mack,
-             sigmawg    = sigmawg.mack,
-             sigmaindiv = sigmaindiv.mack,
-             meanwg     = meanwg.mack)
+                    sigmawg    = sigmawg.mack,
+                    sigmaindiv = sigmaindiv.mack,
+                    meanwg     = meanwg.mack)
 
   } else if (species == "Trachurus symmetricus") {
     # Create a length-based weight vector
@@ -117,9 +130,9 @@ estimate_bootstrap <- function(nasc.df, clf.df,
     nasc.df <- nasc.df %>%
       dplyr::select(transect, cluster, cps.nasc, prop.jack, sigmawg.jack, sigmaindiv.jack, meanwg.jack) %>%
       dplyr::rename(prop       = prop.jack,
-             sigmawg    = sigmawg.jack,
-             sigmaindiv = sigmaindiv.jack,
-             meanwg     = meanwg.jack)
+                    sigmawg    = sigmawg.jack,
+                    sigmaindiv = sigmaindiv.jack,
+                    meanwg     = meanwg.jack)
   }
 
   # Calculate bootstrap estimate for bootstrap num == 0
@@ -251,6 +264,9 @@ estimate_point <- function(df, stratum.area, species){
     } else if (species == "Etrumeus acuminatus") {
       prop    <- df.sub$prop.rher
       sigmawg <- df.sub$sigmawg.rher
+    } else if (species == "Allosmerus elongatus") {
+      prop    <- df.sub$prop.smelt
+      sigmawg <- df.sub$sigmawg.smelt
     }
     # Calculate total polygon biomass, in tons
     biomass.total <- c(biomass.total,
