@@ -10,8 +10,8 @@
 #'   given stratum
 #' @param stratum.num A vector containing stratum number.
 #' @param stratum.area A vector containing stratum area (in square meters).
-#' @param species A vector containing the species' scientific name (Clupea
-#'   pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
+#' @param species A vector containing the species' scientific name (Allosmerus elongatus, Clupea
+#'   pallasii, Engraulis mordax, Etrumeus acuminatus, Sardinops sagax, Scomber japonicus, or
 #'   Trachurus symmetricus).
 #' @param do.lf Return a length frequency (\code{TRUE/FALSE})
 #' @param boot.number A vector defining the number of bootstrap samples.
@@ -228,8 +228,8 @@ estimate_bootstrap <- function(nasc.df, clf.df,
 #'   weight-specific backscattering cross sections (\code{sigmawg.spp}) in a
 #'   given stratum
 #' @param stratum.area A vector containing stratum areas (in square meters).
-#' @param species A vector containing the species' scientific name (Clupea
-#'   pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
+#' @param species A vector containing the species' scientific name (Allosmerus elongatus, Clupea
+#'   pallasii, Engraulis mordax, Etrumeus acuminatus, Sardinops sagax, Scomber japonicus, or
 #'   Trachurus symmetricus).
 #' @return A data frame with the stratum areas and point estimates of total
 #'   biomass.

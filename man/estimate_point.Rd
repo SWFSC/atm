@@ -14,8 +14,8 @@ given stratum}
 
 \item{stratum.area}{A vector containing stratum areas (in square meters).}
 
-\item{species}{A vector containing the species' scientific name (Clupea
-pallasii, Engraulis mordax, Sardinops sagax, Scomber japonicus, or
+\item{species}{A vector containing the species' scientific name (Allosmerus elongatus, Clupea
+pallasii, Engraulis mordax, Etrumeus acuminatus, Sardinops sagax, Scomber japonicus, or
 Trachurus symmetricus).}
 }
 \value{
