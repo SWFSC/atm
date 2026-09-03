@@ -588,8 +588,8 @@ extract_cal_ecs <- function(filename) {
     stringr::str_extract_all(cal, pattern = '\\s+TxducerSerialNumber\\s*=\\s*\\S+')),"\\b\\d{1,5}\\b"))
 
   # Extract transceiver settings
-  TransmitPower       <- as.numeric(stringr::str_extract(unlist(
-    stringr::str_extract_all(cal, pattern = '\\s+TransmitPower\\s*=\\s*\\S+')),"\\b\\d{1,5}\\b"))
+  TransmittedPower    <- as.numeric(stringr::str_extract(unlist(
+    stringr::str_extract_all(cal, pattern = '\\s+TransmittedPower\\s*=\\s*\\S+')),"\\b\\d{1,5}\\b"))
   PulseDuration       <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '\\s+PulseDuration\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}")) * 1000
 
@@ -621,13 +621,17 @@ extract_cal_ecs <- function(filename) {
   EBA           <- as.numeric(stringr::str_extract(unlist(
     stringr::str_extract_all(cal, pattern = '^[^#]*\\s*TwoWayBeamAngle\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
   RMS           <- as.numeric(stringr::str_extract(unlist(
-    stringr::str_extract_all(cal, pattern = '^[^#]*\\s*RMSError\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
+    stringr::str_extract_all(cal, pattern = '\\s[^#]*\\s*RMSError\\s*=\\s*\\S+')),"[-0-9]{1,}\\.[0-9]{1,}"))
+
+  # Replace often missing values with NA
+  if(length(SphereTS) == 0)      SphereTS <-  rep(NA_real_, length(Frequency))
+  if(length(NoiseEstimate) == 0) NoiseEstimate <-  rep(NA_real_, length(Frequency))
 
   # create a tibble of calibration results
   cal.res <- tibble::tibble(Frequency,
                             TxducerModel,
                             TxducerSerialNumber,
-                            TransmitPower,
+                            TransmittedPower,
                             PulseDuration,
                             Temperature,
                             Salinity,
@@ -647,7 +651,7 @@ extract_cal_ecs <- function(filename) {
   names(cal.res) <- c("Frequency",
                       "TxducerModel",
                       "TxducerSerialNumber",
-                      "TransmitPower",
+                      "TransmittedPower",
                       "PulseDuration",
                       "Temperature",
                       "Salinity",
